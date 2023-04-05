@@ -10,7 +10,6 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { HrmBreadCrumbModule } from 'src/app/common/components/hrm-breadcrumb/hrm-breadcrumb.module';
 import { SkeletonModule } from 'primeng/skeleton';
 import { DropdownModule } from 'primeng/dropdown';
-import { customerManagementSystem } from 'src/app/services/customerManagementSystem.service';
 import { PaginatorModule } from 'primeng/paginator';
 import { ToolbarModule } from 'primeng/toolbar';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
@@ -18,7 +17,6 @@ import {CalendarModule} from 'primeng/calendar';
 import { AgGridModule } from 'ag-grid-angular';
 import { ListGridAngularModule } from 'src/app/common/components/list-grid-angular/list-grid-angular.module';
 import { LoadingGridModule } from 'src/app/common/components/loading-grid/loading-grid.module';
-import { DatasService } from 'src/app/services/datas.service';
 import { ExcelService } from 'src/app/services/excel.service';
 import { OrdersComponent } from './orders.component';
 import { OrdersRoutingModule } from './orders-routing.module';
@@ -47,8 +45,6 @@ import { OrdersRoutingModule } from './orders-routing.module';
         
     ],
     providers: [
-        customerManagementSystem,
-        DatasService,
         ExcelService
     ],
     declarations: [

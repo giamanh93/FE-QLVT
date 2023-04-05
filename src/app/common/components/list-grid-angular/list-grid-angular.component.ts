@@ -184,7 +184,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
         //if(rowNode.index < 10){
         //console.log(rowNode);
         //}
-        if(element === 'customerName') {
+        if(element === 'name') {
           target[element] = `Khách hàng: ${this.listsData.length} `
         }else if(element === 'areaName') {
           target[element] = `Khu vực: ${this.listsData.length} `

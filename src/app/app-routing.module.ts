@@ -6,13 +6,15 @@ import { DefaultLayoutComponent } from './containers/default-layout';
       RouterModule.forRoot([
           {
             path: '',
-            redirectTo: 'admin',
+            redirectTo: 'customer',
             pathMatch: 'full',
           },
           {
               path: '', component: DefaultLayoutComponent,
               children: [
-               
+                { path: 'customer', loadChildren: () => import('../app/components/customers/customers.module').then(m => m.CustomersModule) },
+                { path: 'material', loadChildren: () => import('../app/components/material/material.module').then(m => m.MaterialModule) },
+                { path: 'orders', loadChildren: () => import('../app/components/orders/orders.module').then(m => m.OrdersModule) },
                   
               ]
           },

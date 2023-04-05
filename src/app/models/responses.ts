@@ -1,11 +1,10 @@
 export interface Responses {
-    success?: boolean;
-    code?: string;
+    succeeded?: boolean;
+    errors?: boolean;
+    message?: string;
     data?: any;
     pageNumber?: number;
     pageSize?: number;
-    totalElements?: number;
-    last: boolean,
-    first: boolean,
-    totalPages: number
+    totalPages: number,
+    totalRecords: number,
 }
