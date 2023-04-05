@@ -1,0 +1,66 @@
+.p-menubar .p-menubar-root-list>.p-menuitem.parent_active>a>.p-menuitem-text {
+    color: var(--f68c1f);
+}
+
+.p-menubar .p-menubar-root-list>.p-menuitem.parent_active>a {
+    background: #df4800 !important;
+}
+
+.p-menubar .p-menubar-root-list>.p-menuitem {
+    p-menubarsub {
+        &>ul>li {
+            &.active {
+                a {
+                    background: #df4800 !important;
+
+                    .p-menuitem-text {
+                        color: #fff;
+                    }
+                }
+            }
+
+            a {
+                padding: 9px 10px 9px !important;
+                background: #e67e00 !important;
+
+                &:hover {
+                    background: #df4800 !important;
+
+                    .p-menuitem-text {
+                        color: #fff;
+                    }
+                }
+
+                &:focus {
+                    box-shadow: none;
+                }
+
+                .p-menuitem-text {
+                    font-size: 13px;
+                    color: #fff !important;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 960px) {
+    .p-menubar .p-menubar-root-list {
+        background: #e67e00 !important;
+    }
+
+    .main .sidebarBody {
+        padding: 7px 20px !important;
+    }
+
+    .p-menubar .p-menubar-button {
+        background: #e9ecef;
+    }
+
+    .dropdown-branch {
+        position: absolute;
+        right: 20px;
+        top: 52px;
+        z-index: 99;
+    }
+}

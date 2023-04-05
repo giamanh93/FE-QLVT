@@ -1,0 +1,42 @@
+<div class="section">
+  <ag-grid-angular 
+  [style.height]="domLayout === '' ? height + 'px' : ''"
+  [excelStyles]="excelStyles"
+  [getContextMenuItems]="getContextMenuItems"
+   #agGrid style="width: 100% "
+   id="{{idGrid}}"
+  class="ag-theme-alpine"
+  [pinnedBottomRowData]="isShowTotalBottom ? pinnedBottomData : []"
+  [debounceVerticalScrollbar]="true"
+  [rowData]="listsData"
+  [masterDetail]="masterDetail"
+  [floatingFiltersHeight]="floatingFiltersHeight"
+  [autoGroupColumnDef]="autoGroupColumnDef"
+  [columnDefs]="columnDefs"
+  [detailCellRendererParams]="detailCellRendererParams"
+  [headerHeight]="headerHeight"
+  [groupDefaultExpanded]="groupDefaultExpanded"
+  [stopEditingWhenCellsLoseFocus]="true" 
+  [groupDisplayType]="'groupRows'"
+  [overlayNoRowsTemplate]="noRowsTemplate"
+  [tooltipShowDelay]="tooltipShowDelay"
+  (gridReady)="onGridReady($event)"
+  [defaultColDef]="defaultColDef"
+  [enableCellTextSelection]="true"
+  [getRowId]="getRowId"
+  [suppressCopyRowsToClipboard]="true"
+  [enableRangeSelection]="true"
+  [enableRangeSelection]="true"
+  (onGridSizeChanged)="onGridSizeChanged"
+  (rowGroupOpened)="rowGroupOpened($event)"
+  [rowSelection]="'single'"
+  (cellClicked)="CellClicked($event)"
+  [animateRows]= "true"
+  [getRowHeight]="getRowHeight"
+  >
+  </ag-grid-angular>
+</div>
+
+
+<!-- [groupIncludeFooter]="groupIncludeFooter" -->
+<!-- [groupIncludeTotalFooter]="groupIncludeTotalFooter" -->
