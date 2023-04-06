@@ -115,8 +115,8 @@ export class CustomersComponent implements OnInit, AfterViewInit {
         this._service.deleteCustomerById($event.rowData.id)
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe((results: any) => {
-            if (results.status === 'success') {
-              this._messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa thành công' });
+            if (results) {
+              this._messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Xóa thành công' });
               this.getLists();
             } else {
               this._messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
@@ -202,6 +202,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   }
 
   addCustomer() {
+    this.idRow = 0;
     this.displayAddCustomer = true;
   }
 

@@ -1,20 +1,18 @@
+import { MaterialService } from './../services/material.services';
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
+import {  FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { of } from 'rxjs';
-import { NzInputComponent } from 'src/app/common/components/formLy/nz-input/nz-input.component';
-import { CustomerService } from '../services/customer.services';
 
 
 @Component({
-  selector: 'app-detail-customer',
-  templateUrl: './detail-customer.component.html',
-  styleUrls: ['./detail-customer.component.scss']
+  selector: 'app-detail-material',
+  templateUrl: './detail-material.component.html',
+  styleUrls: ['./detail-material.component.scss']
 })
-export class DetailCustomerComponent implements OnInit {
-  private _apiService = inject(CustomerService);
+export class DetailMaterialComponent implements OnInit {
+  private _apiService = inject(MaterialService);
   private _messageService = inject(MessageService);
   private _spinner = inject(NgxSpinnerService);
   @Input() id: number = 0;
@@ -46,28 +44,55 @@ export class DetailCustomerComponent implements OnInit {
           type: 'nzInput',
 
           props: {
-            label: `Tên khách hàng`,
-            placeholder: 'Tên khách hàng',
+            label: `Tên vật tư`,
+            placeholder: 'Tên vật tư',
             required: true,
           },
         },
         {
-          key: 'phone',
+          key: 'unit',
           type: 'nzInput',
           props: {
-            label: 'Số điện thoại',
-            placeholder: 'Số điện thoại',
+            label: 'Đơn vị',
+            placeholder: 'Đơn vị',
             required: true,
-          },
-          validators: {
-            validation: ['phoneError'],
           },
         },
         {
-          key: 'address',
-          type: 'nzTextarea',
+          key: 'price_Sell',
+          type: 'nzInput',
           props: {
-            label: 'Địa chỉ',
+            label: 'Đơn giá bán',
+            placeholder: 'Đơn giá bán',
+            required: true,
+            type: 'number'
+          },
+        },
+        {
+          key: 'price_Sell',
+          type: 'nzInput',
+          props: {
+            label: 'Đơn giá bán',
+            placeholder: 'Đơn giá bán',
+            required: true,
+            type: 'number'
+          },
+        },
+        {
+          key: 'price_Buy',
+          type: 'nzInput',
+          props: {
+            label: 'Đơn giá mua',
+            placeholder: 'Đơn giá mua',
+            required: true,
+            type: 'number'
+          },
+        },
+        {
+          key: 'supplier',
+          type: 'nzInput',
+          props: {
+            label: 'Nhà cung cấp',
             placeholder: 'Nhập địa chỉ',
           },
         },
@@ -75,8 +100,8 @@ export class DetailCustomerComponent implements OnInit {
           key: 'active',
           type: 'nzInput',
           props: {
-            label: 'trạng thái',
-            placeholder: 'Nhập trạng thái',
+            label: 'Trạng thái',
+            placeholder: 'Trạng thái',
           },
         },
         {
@@ -95,23 +120,23 @@ export class DetailCustomerComponent implements OnInit {
 
   ngOnInit() {
     if (this.id > 0) {
-      this.getDetailCustomer();
+      this.getDetailMaterial();
     }
   }
 
-  getDetailCustomer() {
-    this._apiService.getCustomersById(this.id).subscribe(results => {
+  getDetailMaterial() {
+    this._apiService.getMaterialsById(this.id).subscribe(results => {
       if (results) {
         this.model = results;
       }
     })
   }
 
-  submitCustomer() {
+  submitMaterial() {
     if (this.form.valid) {
       this._spinner.show();
       const object: any = this.form.getRawValue()
-      this._apiService.createCustomer(this.form.getRawValue(), object.id ? 'put' :'post').subscribe(results => {
+      this._apiService.createMaterial(this.form.getRawValue(), object.id ? 'put' :'post').subscribe(results => {
         if (results) {
           this._messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thành công' });
           this._spinner.hide();

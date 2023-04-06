@@ -25,11 +25,7 @@ import { DetailCustomerComponent } from './detail-customer/detail-customer.compo
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
 import { DialogModule } from 'primeng/dialog';
-import { NzTextComponent } from 'src/app/common/components/formLy/nz-text/nz-text.component';
-import { NzInputComponent } from 'src/app/common/components/formLy/nz-input/nz-input.component';
-import { InputTextModule } from 'primeng/inputtext';
 import { NzFormLyModule } from 'src/app/common/components/formLy/nzFormLy.module';
-import { ConfirmationService } from 'primeng/api';
 
 export function IpValidatorMessage(error: any, field: FormlyFieldConfig) {
     return `"${field?.name}" is not a valid IP Address`;
@@ -55,7 +51,6 @@ export function IpValidatorMessage(error: any, field: FormlyFieldConfig) {
         CalendarModule,
         ListGridAngularModule,
         LoadingGridModule,
-        AgGridModule,
         DialogModule,
         NzFormLyModule,
         FormlyPrimeNGModule,

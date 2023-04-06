@@ -26,25 +26,35 @@ export class MaterialService {
                 this.handleError(error)
                 return of(error.error);
             })
-        );;
+        );
     }
 
     getMaterialsById(id: number): Observable<Responses> {
-        return this.$http.get<Responses>(baseUrl + `/Materials${id}`).pipe(
+        return this.$http.get<Responses>(baseUrl + `/Materials/${id}`).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);
             })
-        );;
+        );
     }
 
-    createMaterial(params: Material): Observable<Responses> {
-        return this.$http.post<Responses>(baseUrl + `/Materials`, {...params}).pipe(
-            catchError(error => {
-                this.handleError(error)
-                return of(error.error);
-            })
-        );;
+    createMaterial(params: Material, method: string = 'post'): Observable<Responses> {
+        if(method === 'post') {
+            return this.$http.post<Responses>(baseUrl + `/Materials`, {...params}).pipe(
+                catchError(error => {
+                    this.handleError(error)
+                    return of(error.error);
+                })
+            );
+        }else {
+            return this.$http.put<Responses>(baseUrl + `/Materials`, {...params}).pipe(
+                catchError(error => {
+                    this.handleError(error)
+                    return of(error.error);
+                })
+            );
+        }
+       
     }
 
     updateMaterialById(params: Material): Observable<Responses> {
@@ -53,16 +63,16 @@ export class MaterialService {
                 this.handleError(error)
                 return of(error.error);
             })
-        );;
+        );
     }
 
     deleteMaterialById(id: number): Observable<Responses> {
-        return this.$http.delete<Responses>(baseUrl + `/Materials${id}`).pipe(
+        return this.$http.delete<Responses>(baseUrl + `/Materials?id=${id}`).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);
             })
-        );;
+        );
     }
 
    

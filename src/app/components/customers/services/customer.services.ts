@@ -25,7 +25,7 @@ export class CustomerService {
                 this.handleError(error)
                 return of(error.error);
             })
-        );;
+        );
     }
 
     getCustomersById(id: number): Observable<Responses> {
@@ -34,16 +34,26 @@ export class CustomerService {
                 this.handleError(error)
                 return of(error.error);
             })
-        );;
+        );
     }
 
-    createCustomer(params: Customer): Observable<Responses> {
-        return this.$http.post<Responses>(baseUrl + `/Customers`, {...params}).pipe(
-            catchError(error => {
-                this.handleError(error)
-                return of(error.error);
-            })
-        );;
+    createCustomer(params: Customer, method: string = 'post'): Observable<Responses> {
+        if(method === 'post') {
+            return this.$http.post<Responses>(baseUrl + `/Customers`, {...params}).pipe(
+                catchError(error => {
+                    this.handleError(error)
+                    return of(error.error);
+                })
+            );
+        }else {
+            return this.$http.put<Responses>(baseUrl + `/Customers`, {...params}).pipe(
+                catchError(error => {
+                    this.handleError(error)
+                    return of(error.error);
+                })
+            );
+        }
+       
     }
 
     updateCustomerById(params: Customer): Observable<Responses> {
@@ -52,16 +62,16 @@ export class CustomerService {
                 this.handleError(error)
                 return of(error.error);
             })
-        );;
+        );
     }
 
-    deleteCustomerById(id: number): Observable<Responses> {
-        return this.$http.delete<Responses>(baseUrl + `/Customers?id=${id}`).pipe(
+    deleteCustomerById(id: number): Observable<any> {
+        return this.$http.delete<any>(baseUrl + `/Customers?id=${id}`).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);
             })
-        );;
+        );
     }
 
    

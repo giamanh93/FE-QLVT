@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartModule } from 'primeng/chart';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
@@ -21,11 +21,17 @@ import { ExcelService } from 'src/app/services/excel.service';
 import { MaterialRoutingModule } from './material-routing.module';
 import { MaterialComponent } from './material.component';
 import { MaterialService } from './services/material.services';
+import { DetailMaterialComponent } from './detail-material/detail-material.component';
+import { DialogModule } from 'primeng/dialog';
+import { NzFormLyModule } from 'src/app/common/components/formLy/nzFormLy.module';
+import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
+import { FormlyModule } from '@ngx-formly/core';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
         ChartModule,
         MenuModule,
         TableModule,
@@ -42,7 +48,10 @@ import { MaterialService } from './services/material.services';
         CalendarModule,
         ListGridAngularModule,
         LoadingGridModule,
-        AgGridModule
+        DialogModule,
+        NzFormLyModule,
+        FormlyPrimeNGModule,
+        FormlyModule.forRoot(),
         
     ],
     providers: [
@@ -50,7 +59,8 @@ import { MaterialService } from './services/material.services';
         ExcelService
     ],
     declarations: [
-      MaterialComponent
+      MaterialComponent,
+      DetailMaterialComponent
      ]
 })
 export class MaterialModule { }
