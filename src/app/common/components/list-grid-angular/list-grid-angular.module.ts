@@ -7,8 +7,10 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { AgGridModule } from 'ag-grid-angular';
 import { TotalValueFooterComponent } from '../total-value-component/total-value-component';
+import { ButtonAgGridComponent } from '../ag-grid-components/app-button-renderer';
+import { MenuModule } from 'primeng/menu';
 @NgModule({
-    declarations: [ListGridAngularComponent, TotalValueFooterComponent],
+    declarations: [ListGridAngularComponent, TotalValueFooterComponent, ButtonAgGridComponent],
     imports: [
         FormsModule,
         ReactiveFormsModule,
@@ -17,11 +19,13 @@ import { TotalValueFooterComponent } from '../total-value-component/total-value-
         AgGridModule,
         ButtonModule,
         DialogModule,
+        MenuModule,
 
     ],
     entryComponents: [],
     exports: [
-        ListGridAngularComponent
+        ListGridAngularComponent,
+        ButtonAgGridComponent
     ],
     providers: []
 })

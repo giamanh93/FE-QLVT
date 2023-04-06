@@ -53,5 +53,5 @@
     <p-header>
         Thêm mới khách hàng
     </p-header>
-       <app-detail-customer *ngIf="displayAddCustomer"></app-detail-customer>
+       <app-detail-customer *ngIf="displayAddCustomer" (saveCallBack)="callback()" [id]="idRow"></app-detail-customer>
 </p-dialog>

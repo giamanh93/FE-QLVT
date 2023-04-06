@@ -1,4 +1,4 @@
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -23,6 +23,7 @@ import {ToastModule} from 'primeng/toast';
 import { DatePipe } from '@angular/common';
 import 'ag-grid-enterprise';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,10 +48,12 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     PanelMenuModule,
     ButtonModule,
     ToastModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ConfirmDialogModule
   ],
   providers: [
     MessageService,
+    ConfirmationService,
     DatePipe
   ],
   

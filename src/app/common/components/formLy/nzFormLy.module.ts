@@ -15,9 +15,9 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 
 
 
-export function phoneValidator(control: AbstractControl): ValidationErrors {
+export function phoneValidator(control: AbstractControl): any {
     const regex = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
-    return (!regex.test(control.value)) ? { phoneError: true } : { phoneError: false };
+    return (!regex.test(control.value)) ? { phoneError: true } : null;
   }
 
 

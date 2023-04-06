@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RowNode } from 'ag-grid-community';
 import { MessageService } from 'primeng/api';
 import { Subject, } from 'rxjs';
+import { ButtonAgGridComponent } from '../ag-grid-components/app-button-renderer';
 import { TotalValueFooterComponent } from '../total-value-component/total-value-component';
 @Component({
   selector: 'app-list-grid-angular',
@@ -24,7 +25,9 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   @Input() masterDetail: boolean = false;
   @Input() isConfig: boolean = true;
   @Input() rowSelection: string = 'single';
-  @Input() frameworkComponents = {};
+  @Input() frameworkComponents = {
+    buttonAgGridComponent: ButtonAgGridComponent,
+  };
   @Input() getRowId:any = null;
   @Input() detailCellRendererParams: any = null;
   @Input() autoGroupColumnDef: any = {};

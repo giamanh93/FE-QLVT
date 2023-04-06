@@ -29,6 +29,7 @@ import { NzTextComponent } from 'src/app/common/components/formLy/nz-text/nz-tex
 import { NzInputComponent } from 'src/app/common/components/formLy/nz-input/nz-input.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { NzFormLyModule } from 'src/app/common/components/formLy/nzFormLy.module';
+import { ConfirmationService } from 'primeng/api';
 
 export function IpValidatorMessage(error: any, field: FormlyFieldConfig) {
     return `"${field?.name}" is not a valid IP Address`;
@@ -63,7 +64,7 @@ export function IpValidatorMessage(error: any, field: FormlyFieldConfig) {
     ],
     providers: [
         CustomerService,
-        ExcelService
+        ExcelService,
     ],
     declarations: [
         CustomersComponent,

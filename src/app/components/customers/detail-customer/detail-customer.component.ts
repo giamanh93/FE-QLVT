@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { NzInputComponent } from 'src/app/common/components/formLy/nz-input/nz-input.component';
+import { CustomerService } from '../services/customer.services';
 
 
 @Component({
@@ -10,20 +13,41 @@ import { NzInputComponent } from 'src/app/common/components/formLy/nz-input/nz-i
   templateUrl: './detail-customer.component.html',
   styleUrls: ['./detail-customer.component.scss']
 })
-export class DetailCustomerComponent {
+export class DetailCustomerComponent implements OnInit {
+  private _apiService = inject(CustomerService);
+  private _messageService = inject(MessageService);
+  private _spinner = inject(NgxSpinnerService);
+  @Input() id: number = 0;
+  @Output() saveCallBack = new EventEmitter<any>();
   form = new FormGroup({});
   model: any = {};
-  options: FormlyFormOptions = {};
+  public options: FormlyFormOptions = {
+    formState: {
+      awesomeIsForced: true,
+    },
+  };
   fields: FormlyFieldConfig[] = [
     {
       fieldGroupClassName: 'field',
       fieldGroup: [
         {
+          key: 'id',
+          type: 'nzInput',
+          expressions: {
+            'props.disabled': 'true',
+          },
+          props: {
+            label: `Mã`,
+            placeholder: 'Mã tự sinh',
+          },
+        },
+        {
           key: 'name',
           type: 'nzInput',
+
           props: {
             label: `Tên khách hàng`,
-            placeholder: 'Formly is terrific!',
+            placeholder: 'Tên khách hàng',
             required: true,
           },
         },
@@ -32,7 +56,7 @@ export class DetailCustomerComponent {
           type: 'nzInput',
           props: {
             label: 'Số điện thoại',
-            placeholder: 'Formly is terrific!',
+            placeholder: 'Số điện thoại',
             required: true,
           },
           validators: {
@@ -44,8 +68,7 @@ export class DetailCustomerComponent {
           type: 'nzTextarea',
           props: {
             label: 'Địa chỉ',
-            placeholder: 'Formly is terrific!',
-            required: true,
+            placeholder: 'Nhập địa chỉ',
           },
         },
         {
@@ -53,8 +76,7 @@ export class DetailCustomerComponent {
           type: 'nzTextarea',
           props: {
             label: 'Ghi chú',
-            placeholder: 'Formly is terrific!',
-            required: true,
+            placeholder: 'Ghi chú',
           },
         },
       ]
@@ -62,4 +84,36 @@ export class DetailCustomerComponent {
     },
 
   ];
+
+  ngOnInit() {
+    if (this.id > 0) {
+      this.getDetailCustomer();
+    }
+  }
+
+  getDetailCustomer() {
+    this._apiService.getCustomersById(this.id).subscribe(results => {
+      if (results) {
+        this.model = results;
+      }
+    })
+  }
+
+  submitCustomer() {
+    if (this.form.valid) {
+      this._spinner.show();
+      this._apiService.createCustomer(this.form.getRawValue()).subscribe(results => {
+        if (results) {
+          this._messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thành công' });
+          this._spinner.hide();
+          this.saveCallBack.emit()
+        } else {
+          this._messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Thất bại' });
+          this._spinner.hide();
+        }
+        console.log(results)
+      })
+    }
+  }
+
 }

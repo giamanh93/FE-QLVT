@@ -29,7 +29,7 @@ export class CustomerService {
     }
 
     getCustomersById(id: number): Observable<Responses> {
-        return this.$http.get<Responses>(baseUrl + `/Customers${id}`).pipe(
+        return this.$http.get<Responses>(baseUrl + `/Customers/${id}`).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);
@@ -56,7 +56,7 @@ export class CustomerService {
     }
 
     deleteCustomerById(id: number): Observable<Responses> {
-        return this.$http.delete<Responses>(baseUrl + `/Customers${id}`).pipe(
+        return this.$http.delete<Responses>(baseUrl + `/Customers?id=${id}`).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);
