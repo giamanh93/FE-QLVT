@@ -5,13 +5,15 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { ExcelService } from 'src/app/services/excel.service';
-import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { FormlyModule } from '@ngx-formly/core';
 import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
 import { NzInputComponent } from 'src/app/common/components/formLy/nz-input/nz-input.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { NzTextareaComponent } from './nz-textarea/nz-textarea.component';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-
+import { NzDropdownComponent } from './nz-dropdown/nz-dropdown.component';
+import { CheckboxModule } from 'primeng/checkbox';
+import { NzCheckboxComponent } from './nz-checkbox/nz-checkbox.component';
 
 
 
@@ -32,6 +34,7 @@ export function phoneValidator(control: AbstractControl): any {
         InputTextModule,
         InputTextareaModule,
         FormlyPrimeNGModule,
+        CheckboxModule,
         
         FormlyModule.forRoot({
             validators: [{ name: 'phoneError', validation: phoneValidator }],
@@ -46,8 +49,18 @@ export function phoneValidator(control: AbstractControl): any {
                     name: 'nzTextarea',
                     component: NzTextareaComponent,
                     extends:'textarea',
-                 
-                }
+                },
+                {
+                    name: 'nzDropdown',
+                    component: NzDropdownComponent,
+                    extends:'select',
+                },
+                {
+                    name: 'nzCheckbox',
+                    component: NzCheckboxComponent,
+                    extends:'checkbox',
+                },
+                
             ],
             validationMessages: [
                 { name: 'required', message: 'This field is required' },
@@ -61,7 +74,9 @@ export function phoneValidator(control: AbstractControl): any {
     ],
     declarations: [
         NzInputComponent,
-        NzTextareaComponent
+        NzTextareaComponent,
+        NzDropdownComponent,
+        NzCheckboxComponent
     ]
 })
 export class NzFormLyModule { }

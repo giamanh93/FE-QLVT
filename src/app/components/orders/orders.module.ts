@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartModule } from 'primeng/chart';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
@@ -20,6 +20,12 @@ import { LoadingGridModule } from 'src/app/common/components/loading-grid/loadin
 import { ExcelService } from 'src/app/services/excel.service';
 import { OrdersComponent } from './orders.component';
 import { OrdersRoutingModule } from './orders-routing.module';
+import { OrderService } from './services/order.services';
+import { DialogModule } from 'primeng/dialog';
+import { NzFormLyModule } from 'src/app/common/components/formLy/nzFormLy.module';
+import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
+import { FormlyModule } from '@ngx-formly/core';
+import { DetailOrderComponent } from './detail-order/detail-order.component';
 
 @NgModule({
     imports: [
@@ -28,6 +34,7 @@ import { OrdersRoutingModule } from './orders-routing.module';
         ChartModule,
         MenuModule,
         TableModule,
+        ReactiveFormsModule,
         StyleClassModule,
         PanelMenuModule,
         ButtonModule,
@@ -41,14 +48,18 @@ import { OrdersRoutingModule } from './orders-routing.module';
         CalendarModule,
         ListGridAngularModule,
         LoadingGridModule,
-        AgGridModule
-        
+        DialogModule,
+        NzFormLyModule,
+        FormlyPrimeNGModule,
+        FormlyModule.forRoot(),
     ],
     providers: [
+        OrderService,
         ExcelService
     ],
     declarations: [
-        OrdersComponent
+        OrdersComponent,
+        DetailOrderComponent
      ]
 })
 export class OrdersModule { }
