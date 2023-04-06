@@ -1,0 +1,8 @@
+<div class="field grid">
+    <label for="firstname3" class="col-fixed font-semibold" style="width:150px">{{to.label}} <span *ngIf="to.required" >*</span></label>
+    <div class="col">
+        <textarea  rows="4"  [formControl]="formControl" 
+         class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+         [ngClass]="{'ng-pristine ng-invalid ng-star-inserted ng-dirty ng-touched': (formControl.touched && formControl.getError('required')) }"></textarea>
+    </div>
+</div>

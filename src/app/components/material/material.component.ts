@@ -139,7 +139,7 @@ export class MaterialComponent implements OnInit, AfterViewInit {
 		this.loadjs++
 		if (this.loadjs === 5) {
 			if (b && b.clientHeight && d) {
-				const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight  + 85;
+				const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight ;
 				this.heightGrid = window.innerHeight - totalHeight;
 				console.log(this.heightGrid)
 				this.$changeDetech.detectChanges();

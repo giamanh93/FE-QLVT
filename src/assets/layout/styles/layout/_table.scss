@@ -62,6 +62,29 @@
     [aria-label="columns"] {
         order: 3 !important;
     }
-    
-    
+}
+
+formly-field {
+    .p-field {
+        position: relative;
+        padding-bottom: 18px;
+        label {
+            display: none;
+        }
+        .ng-invalid.ng-touched {
+            border-color: #f44336 !important;
+        }
+        small{
+            &.p-error{
+                position: absolute;
+                left: 150px;
+                bottom: 0;
+            }
+        }
+        .field {
+            &.grid{
+                margin-bottom: 0px;
+            }
+        }
+    }
 }

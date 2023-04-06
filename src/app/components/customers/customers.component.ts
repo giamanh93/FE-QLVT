@@ -23,6 +23,9 @@ export class CustomersComponent implements OnInit, AfterViewInit {
 		currentRecordStart: 0,
 		currentRecordEnd: 0
 	}
+  loadjs : number = 0;
+	heightGrid :number = 0;
+  displayAddCustomer: boolean = false;
   public getRowId: GetRowIdFunc = (params: GetRowIdParams) => {
     return params.data.id;
   };
@@ -124,8 +127,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
 		this.countRecord.currentRecordEnd = this.query.page === 1 ? this.query.size : this.query.page * Number(this.query.size)
 	}
 
-	loadjs = 0;
-	heightGrid = 0
+
 	ngAfterViewChecked(): void {
 		const a: any = document.querySelector(".header");
 		const b: any = document.querySelector(".sidebarBody");
@@ -135,7 +137,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
 		this.loadjs++
 		if (this.loadjs === 5) {
 			if (b && b.clientHeight && d) {
-				const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight  + 85;
+				const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight  + 25;
 				this.heightGrid = window.innerHeight - totalHeight;
 				console.log(this.heightGrid)
 				this.$changeDetech.detectChanges();
@@ -144,6 +146,10 @@ export class CustomersComponent implements OnInit, AfterViewInit {
 			}
 		}
 	}
+
+  addCustomer() {
+    this.displayAddCustomer= true;
+  }
 
 	getContextMenuItems(params: any) {
 		var result = [
