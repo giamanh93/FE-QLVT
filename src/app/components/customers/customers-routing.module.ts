@@ -9,6 +9,7 @@ import { CustomersComponent } from './customers.component';
 @NgModule({
     imports: [RouterModule.forChild([
         { path: '', component: CustomersComponent },
+        { path: 'list', component: CustomersComponent },
         
     ])],
     exports: [RouterModule]

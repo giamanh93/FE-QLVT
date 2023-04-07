@@ -5,7 +5,7 @@ import { MessageService } from 'primeng/api';
 import { ErrorService } from 'src/app/services/error.service';
 import { Responses } from 'src/app/models/responses';
 import { Customer } from 'src/app/models/customer';
-const baseUrl = 'http://10.50.10.208:6969/api';
+const baseUrl = 'https://localhost:7153/api';
 
 @Injectable({
     providedIn: 'root'

@@ -1,10 +1,26 @@
-<form [formGroup]="form" (ngSubmit)="submitMaterial()">
-    <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
 
-   <div class="flex gap-2">
-    <button pButton class="p-button-sm" type="submit" icon="pi pi-send" >Gửi</button>
 
-    <button pButton class="p-button-sm p-button-danger"  (click)="form.reset()">Reset</button>
-   </div>
-  </form>
-  
+  <div class="main-grid product-detail" style="padding-top: 22px;">
+    <section>
+        <div class="breadcrumb">
+            <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
+            <h3>{{titlePage}}</h3>
+        </div>
+    </section>
+</div>
+<p-card>
+    <form [formGroup]="form" (ngSubmit)="submitMaterial()">
+        <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
+    
+       <div class="flex gap-2">
+        <button pButton class="p-button-sm" type="submit" icon="pi pi-send" >Gửi</button>
+    
+        <button pButton class="p-button-sm p-button-danger"  (click)="form.reset()">Reset</button>
+       </div>
+      </form>
+      
+       
+</p-card>
+
+
+

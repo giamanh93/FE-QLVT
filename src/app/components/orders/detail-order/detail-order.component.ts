@@ -4,6 +4,10 @@ import {  FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
+import queryString from 'query-string';
+import { Subject, takeUntil } from 'rxjs';
+import { CustomerService } from '../../customers/services/customer.services';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-detail-order',
@@ -12,112 +16,224 @@ import { MessageService } from 'primeng/api';
 })
 export class DetailOrderComponent implements OnInit {
   private _apiService = inject(OrderService);
+  private _service = inject(CustomerService);
   private _messageService = inject(MessageService);
   private _spinner = inject(NgxSpinnerService);
+  private _activatedRoute = inject(ActivatedRoute);
+  private readonly unsubscribe$: Subject<void> = new Subject();
   @Input() id: number = 0;
   @Output() saveCallBack = new EventEmitter<any>();
   form = new FormGroup({});
-  model: any = {};
+  model: any = {
+    "id": 0,
+    "code": "string",
+    "unit": "string",
+    "create_Date": "2023-04-07T02:21:12.921Z",
+    "update_Date": "2023-04-07T02:21:12.921Z",
+    "amount": 0,
+    "note": "string",
+    "cust_Id": 0,
+    "details": [
+      {
+        "id": 0,
+        "order_Id": 0,
+        "create_Date": "2023-04-07T02:21:12.921Z",
+        "update_Date": "2023-04-07T02:21:12.921Z",
+        "price": 0,
+        "price_Change": 0,
+        "quantity": 0,
+        "amount": 0,
+        "material_Id": 0,
+        "note": "string"
+      }
+    ]
+  };
   public options: FormlyFormOptions = {
     formState: {
       awesomeIsForced: true,
     },
   };
-  fields: FormlyFieldConfig[] = [
-    {
-      fieldGroupClassName: 'field',
-      fieldGroup: [
-        {
-          key: 'id',
-          type: 'nzInput',
-          expressions: {
-            'props.disabled': 'true',
-          },
-          props: {
-            label: `Mã`,
-            placeholder: 'Mã tự sinh',
-          },
-        },
-        {
-          key: 'name',
-          type: 'nzInput',
+  fields: FormlyFieldConfig[] = [];
 
-          props: {
-            label: `Tên vật tư`,
-            placeholder: 'Tên vật tư',
-            required: true,
+  onInitFields() {
+    this.fields= [
+      {
+        fieldGroupClassName: 'field',
+        fieldGroup: [
+          {
+            key: 'id',
+            type: 'nzInput',
+            expressions: {
+              'props.disabled': 'true',
+            },
+            props: {
+              label: 'Mã',
+              placeholder: 'Mã tự sinh',
+            },
           },
-        },
-        {
-          key: 'unit',
-          type: 'nzInput',
-          props: {
-            label: 'Đơn vị',
-            placeholder: 'Đơn vị',
-            required: true,
+          {
+            key: 'code',
+            type: 'nzInput',
+            props: {
+              label: 'Mã hàng',
+              placeholder: 'Mã hàng',
+              required: true,
+            },
           },
-        },
-        {
-          key: 'price_Sell',
-          type: 'nzInput',
-          props: {
-            label: 'Đơn giá bán',
-            placeholder: 'Đơn giá bán',
-            required: true,
-            type: 'number'
+          {
+            key: 'cust_Id',
+            type: 'nzDropdown',
+  
+            props: {
+              label: 'Khách hàng',
+              placeholder: 'Khách hàng',
+              required: true,
+              options: this.customers
+            },
           },
-        },
-        {
-          key: 'price_Sell',
-          type: 'nzInput',
-          props: {
-            label: 'Đơn giá bán',
-            placeholder: 'Đơn giá bán',
-            required: true,
-            type: 'number'
+          {
+            key: 'create_Date',
+            type: 'nzInput',
+            props: {
+              label: 'Ngày tạo',
+              placeholder: 'Ngày tạo',
+              required: true,
+            },
           },
-        },
-        {
-          key: 'price_Buy',
-          type: 'nzInput',
-          props: {
-            label: 'Đơn giá mua',
-            placeholder: 'Đơn giá mua',
-            required: true,
-            type: 'number'
+          {
+            key: 'amount',
+            type: 'nzInput',
+            props: {
+              label: 'Tổng tiền hàng',
+              placeholder: 'Tổng tiền hàng',
+              required: true,
+              type: 'number'
+            },
           },
-        },
-        {
-          key: 'supplier',
-          type: 'nzInput',
-          props: {
-            label: 'Nhà cung cấp',
-            placeholder: 'Nhập địa chỉ',
+          {
+            key: 'note',
+            type: 'nzInput',
+            props: {
+              label: 'Ghi chú',
+              placeholder: 'Ghi chú',
+              required: true,
+            },
           },
-        },
-        {
-          key: 'active',
-          type: 'nzInput',
-          props: {
-            label: 'Trạng thái',
-            placeholder: 'Trạng thái',
+          {
+            key: 'details',
+            type: 'repeatDrivers',
+            defaultValue: [  {} ],
+            fieldArray: {
+              fieldGroup: [
+                {
+                  key: 'id',
+                  type: 'nzInput',
+                  hide: true,
+                  props: {
+                    label: 'Mã',
+                    placeholder: 'Không cần nhập',
+                    required: true,
+                  },
+                },
+                {
+                  key: 'order_id',
+                  type: 'nzInput',
+                  hide: true,
+                  props: {
+                    label: 'Mã đơn',
+                    placeholder: 'Không cần nhập',
+                    required: true,
+                  },
+                },
+                {
+                  key: 'material_Id',
+                  type: 'nzDropdown',
+                  props: {
+                    label: 'Vật tư',
+                    placeholder: 'Vật tư',
+                    required: true,
+                    options: this.customers
+                  },
+                },
+                {
+                  key: 'price',
+                  type: 'nzInput',
+                  props: {
+                    label: 'Đơn giá',
+                    placeholder: 'Đơn giá',
+                    required: true,
+                    type: 'number'
+                  },
+                },
+                {
+                  key: 'price_Change',
+                  type: 'nzInput',
+                  props: {
+                    label: 'Đơn giá thay đổi',
+                    placeholder: 'Đơn giá thay đổi',
+                    required: true,
+                    type: 'number'
+                  },
+                },
+                {
+                  key: 'quantity',
+                  type: 'nzInput',
+                  props: {
+                    label: 'Số lượng',
+                    placeholder: 'Số lượng',
+                    required: true,
+                    type: 'number'
+                  },
+                },
+                {
+                  key: 'amount',
+                  type: 'nzInput',
+                  props: {
+                    label: 'Thành tiền',
+                    placeholder: 'Thành tiền',
+                    required: true,
+                    type: 'number'
+                  },
+                }
+              ]
+            }
           },
-        },
-        {
-          key: 'note',
-          type: 'nzTextarea',
-          props: {
-            label: 'Ghi chú',
-            placeholder: 'Ghi chú',
-          },
-        },
-      ]
+        ]
+  
+      },
+  
+    ];
+  }
 
-    },
-
-  ];
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+  customers: any[] = [];
+  itemsMenu: any[] = [];
+  titlePage: string = '';
+  getLists() {
+    this._service.getCustomers('')
+      .subscribe(results => {
+        if (results.succeeded) {
+          this.customers = results.data.map((item: any) => {
+            return {
+              label: item.name,
+              value: item.id
+            }
+          });
+          this.onInitFields();
+        } 
+      })
+  }
 
   ngOnInit() {
+    this.getLists();
+    this.itemsMenu =  [
+      { label: 'Home' , routerLink: '/home' },
+      { label: 'Danh sách đơn hàng', routerLink: '/order/list' },
+      { label: 'Thêm ' },
+    ]
     if (this.id > 0) {
       this.getDetailMaterial();
     }

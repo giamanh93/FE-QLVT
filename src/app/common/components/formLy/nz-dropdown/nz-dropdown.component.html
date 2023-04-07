@@ -5,10 +5,11 @@
         <p-dropdown [options]="listOptions" [formControl]="formControl" [formlyAttributes]="field"
             [autoDisplayFirst]="false"
             [ngClass]="{'ng-pristine ng-invalid ng-star-inserted ng-dirty ng-touched': (formControl.touched && formControl.getError('required')) }"
-            optionLabel="label" optionValue="value" [appendTo]="'body'" className="w-full text-base text-color
-          surface-overlay p-2 border-1 border-solid
-           surface-border border-round outline-none
-            focus:border-primary" style="appearance: auto" [filter]="true" filterBy="label">
+
+            [styleClass]="(formControl.touched && formControl.getError('required'))
+             ? 'ng-pristine ng-invalid ng-star-inserted ng-dirty ng-touched w-full text-base text-color surface-overlay p-2 surface-border border-round outline-none focus:border-primary'
+             : 'w-full text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round outline-none focus:border-primary'"
+            optionLabel="label" optionValue="value" [appendTo]="'body'" [filter]="true" filterBy="label">
         </p-dropdown>
     </div>
 </div>

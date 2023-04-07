@@ -14,7 +14,6 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ToolbarModule } from 'primeng/toolbar';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import {CalendarModule} from 'primeng/calendar';
-import { AgGridModule } from 'ag-grid-angular';
 import { ListGridAngularModule } from 'src/app/common/components/list-grid-angular/list-grid-angular.module';
 import { LoadingGridModule } from 'src/app/common/components/loading-grid/loading-grid.module';
 import { ExcelService } from 'src/app/services/excel.service';
@@ -26,6 +25,9 @@ import { NzFormLyModule } from 'src/app/common/components/formLy/nzFormLy.module
 import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
 import { FormlyModule } from '@ngx-formly/core';
 import { DetailOrderComponent } from './detail-order/detail-order.component';
+import { CustomerService } from '../customers/services/customer.services';
+import { CardModule } from 'primeng/card';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 @NgModule({
     imports: [
@@ -51,10 +53,13 @@ import { DetailOrderComponent } from './detail-order/detail-order.component';
         DialogModule,
         NzFormLyModule,
         FormlyPrimeNGModule,
+        CardModule,
+        BreadcrumbModule,
         FormlyModule.forRoot(),
     ],
     providers: [
         OrderService,
+        CustomerService,
         ExcelService
     ],
     declarations: [

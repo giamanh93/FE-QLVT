@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { DetailOrderComponent } from './detail-order/detail-order.component';
 import { OrdersComponent } from './orders.component';
 // { label: '1. Theo dõi doanh số khách hàng theo sản phẩm', routerLink: '/customer-mgmt-system/follow-up-customer-sales-product' },
 // { label: '2. Theo dõi doanh số khách hàng theo chu kỳ', routerLink: '/customer-mgmt-system/follow-up-customer-cycle' },
@@ -9,7 +10,24 @@ import { OrdersComponent } from './orders.component';
 @NgModule({
     imports: [RouterModule.forChild([
         { path: '', component: OrdersComponent },
-        
+        { path: 'list', component: OrdersComponent },
+        {
+            path: 'list/create-order'
+            , component: DetailOrderComponent
+            , data: {
+                title: 'Tạo mới đơn hàng',
+                url: 'create-order',
+            },
+        },
+        {
+            path: 'list/view-order'
+            , component: DetailOrderComponent
+            , data: {
+                title: 'chi tiết đơn hàng',
+                url: 'create-order',
+            },
+        },
+
     ])],
     exports: [RouterModule]
 })

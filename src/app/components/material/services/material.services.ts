@@ -5,7 +5,7 @@ import { MessageService } from 'primeng/api';
 import { ErrorService } from 'src/app/services/error.service';
 import { Responses } from 'src/app/models/responses';
 import { Material } from 'src/app/models/material';
-const baseUrl = 'http://10.50.10.208:6969/api';
+const baseUrl = 'https://localhost:7153/api';
 
 @Injectable({
     providedIn: 'root'
@@ -19,7 +19,7 @@ export class MaterialService {
         let headers = new HttpHeaders();
         return { headers: headers.set('Content-Type', 'application/json').set('accept', '*/*') };
       }
-      
+
     getMaterials(query: string): Observable<Responses> {
         return this.$http.get<Responses>(baseUrl + `/Materials?` + query, this.getOptions()).pipe(
             catchError(error => {

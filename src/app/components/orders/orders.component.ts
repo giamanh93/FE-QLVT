@@ -1,5 +1,6 @@
 
 import { Component, OnInit, inject, ChangeDetectorRef, AfterViewInit, SimpleChanges, OnChanges, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { ColDef, GetRowIdFunc, GetRowIdParams } from 'ag-grid-community';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import queryString from 'query-string';
@@ -38,6 +39,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   private _messageService = inject(MessageService);
   private _changeDetech = inject(ChangeDetectorRef);
   private _confirmationService = inject(ConfirmationService);
+  private _router = inject(Router);
   public listDatas: Order[] = [];
   public listDatasLoading: any[] = Array(20).fill(1).map((x, i) => i);
   public isLoading: boolean = false;
@@ -56,14 +58,14 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   };
   public columnDefs: ColDef[] = [];
   public cols: any[] = [
-	{ field: "id", header: "Mã Id", typeField: 'text' },
-	{ field: "code", header: "Mã đơn", typeField: 'text' },
-	{ field: "create_date", header: "Ngày tạo", typeField: 'text' },
-	{ field: "update_date", header: "Ngày cập nhật", typeField: 'text' },
-	{ field: "amount", header: "Tổng KL", typeField: 'decimal' },
-	{ field: "cust_id", header: "Khách hàng", typeField: 'decimal' },
-	{ field: "note", header: "Ghi chú", typeField: 'text' },
-];
+    { field: "id", header: "Mã Id", typeField: 'text' },
+    { field: "code", header: "Mã đơn", typeField: 'text' },
+    { field: "create_date", header: "Ngày tạo", typeField: 'text' },
+    { field: "update_date", header: "Ngày cập nhật", typeField: 'text' },
+    { field: "amount", header: "Tổng KL", typeField: 'decimal' },
+    { field: "cust_id", header: "Khách hàng", typeField: 'decimal' },
+    { field: "note", header: "Ghi chú", typeField: 'text' },
+  ];
 
   ngAfterViewInit() {
     this._changeDetech.detectChanges();
@@ -204,8 +206,8 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   }
 
   addCustomer() {
-	this.idRow = 0
-    this.displayAddMaterial = true;
+    this.idRow = 0
+    this._router.navigate(['/order/list/create-order']); 
   }
 
   callback() {
