@@ -22,10 +22,7 @@ export class NavbarComponent implements OnInit {
     chooseOrga = false
     confimPassword = false;
     submitPass = false;
-    organizeRole = null;
-    listmenuChecks = []
     menuItems: any[] = [];
-    urlsForDisableOrgan = []
     isShowPass = false;
     isShowRepass = false
     constructor(
@@ -74,7 +71,6 @@ export class NavbarComponent implements OnInit {
     //     this.themeService.switchTheme(theme);
     // }
 
-    detailOrganizes = []
 
 
     ngAfterViewChecked(): void {

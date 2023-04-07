@@ -49,9 +49,9 @@
         </div>
 </div>
 
-<!-- <p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayAddCustomer" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '50vw', height: 'auto'}">
+<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayAddOrder" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '60vw', height: 'auto'}">
     <p-header>
-        Thêm mới khách hàng
+        Chi tiết đơn hàng
     </p-header>
-       <app-detail-customer *ngIf="displayAddCustomer" (saveCallBack)="callback()" [id]="idRow"></app-detail-customer>
-</p-dialog> -->
+       <app-detail-order *ngIf="displayAddOrder" [isDialog]="true" (saveCallBack)="callback()" [id]="idRow"></app-detail-order>
+</p-dialog>

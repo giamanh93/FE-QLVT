@@ -20,10 +20,10 @@ import { OrdersComponent } from './orders.component';
             },
         },
         {
-            path: 'list/view-order'
+            path: 'list/update-order'
             , component: DetailOrderComponent
             , data: {
-                title: 'chi tiết đơn hàng',
+                title: 'Chỉnh sửa đơn hàng',
                 url: 'create-order',
             },
         },

@@ -11,11 +11,13 @@ export interface OptionDropdown {
 })
 export class NzDropdownComponent  extends FieldType<FieldTypeConfig> implements OnInit{
   listOptions: OptionDropdown[] = []
+  isFilter = false;
   get type() {
     return this.props.type || 'text';
   }
 
-
   ngOnInit(): void {
+    const lists: any = this.field.props.options;
+    this.listOptions = lists;
   }
 }

@@ -1,14 +1,22 @@
 import { OrderService } from './../services/order.services';
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import {  FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import queryString from 'query-string';
-import { Subject, takeUntil } from 'rxjs';
+import { forkJoin, of, Subject, takeUntil } from 'rxjs';
 import { CustomerService } from '../../customers/services/customer.services';
 import { ActivatedRoute } from '@angular/router';
-
+import { JSONSchema7 } from "json-schema";
+import { MaterialService } from '../../material/services/material.services';
+export interface MySchema {
+  hidden: boolean;
+  disabled: boolean;
+}
+export interface Optionss {
+  label: string;
+  value: any;
+}
 @Component({
   selector: 'app-detail-order',
   templateUrl: './detail-order.component.html',
@@ -17,46 +25,53 @@ import { ActivatedRoute } from '@angular/router';
 export class DetailOrderComponent implements OnInit {
   private _apiService = inject(OrderService);
   private _service = inject(CustomerService);
+  private _serviceMaterial = inject(MaterialService);
   private _messageService = inject(MessageService);
   private _spinner = inject(NgxSpinnerService);
   private _activatedRoute = inject(ActivatedRoute);
   private readonly unsubscribe$: Subject<void> = new Subject();
   @Input() id: number = 0;
+  @Input() isDialog: boolean = false;
   @Output() saveCallBack = new EventEmitter<any>();
   form = new FormGroup({});
   model: any = {
-    "id": 0,
-    "code": "string",
-    "unit": "string",
-    "create_Date": "2023-04-07T02:21:12.921Z",
-    "update_Date": "2023-04-07T02:21:12.921Z",
-    "amount": 0,
-    "note": "string",
-    "cust_Id": 0,
-    "details": [
+    id: 0,
+    code: "",
+    unit: "",
+    create_Date: new Date(),
+    update_Date: new Date(),
+    amount: 0,
+    note: "",
+    cust_Id: null,
+    details: [
       {
-        "id": 0,
-        "order_Id": 0,
-        "create_Date": "2023-04-07T02:21:12.921Z",
-        "update_Date": "2023-04-07T02:21:12.921Z",
-        "price": 0,
-        "price_Change": 0,
-        "quantity": 0,
-        "amount": 0,
-        "material_Id": 0,
-        "note": "string"
-      }
+        id: 0,
+        order_Id: 0,
+        unit: "",
+        create_Date: "2023-04-07T02:21:12.921Z",
+        update_Date: "2023-04-07T02:21:12.921Z",
+        price: 0,
+        price_Change: 0,
+        quantity: 0,
+        amount: 0,
+        material_Id: null,
+        note: "string"
+      },
+
     ]
   };
   public options: FormlyFormOptions = {
     formState: {
       awesomeIsForced: true,
+      cust_Id: [],
+      material_Id: []
     },
   };
   fields: FormlyFieldConfig[] = [];
 
   onInitFields() {
-    this.fields= [
+
+    this.fields = [
       {
         fieldGroupClassName: 'field',
         fieldGroup: [
@@ -83,13 +98,14 @@ export class DetailOrderComponent implements OnInit {
           {
             key: 'cust_Id',
             type: 'nzDropdown',
-  
             props: {
               label: 'Khách hàng',
               placeholder: 'Khách hàng',
               required: true,
-              options: this.customers
             },
+            expressionProperties: {
+              'templateOptions.options': 'formState.customers'
+            }
           },
           {
             key: 'create_Date',
@@ -116,44 +132,77 @@ export class DetailOrderComponent implements OnInit {
             props: {
               label: 'Ghi chú',
               placeholder: 'Ghi chú',
-              required: true,
             },
           },
           {
             key: 'details',
-            type: 'repeatDrivers',
-            defaultValue: [  {} ],
+            fieldGroupClassName: 'table_list card',
+            props: {
+              label: 'Vật tư 1'
+            },
+            type: "array",
             fieldArray: {
               fieldGroup: [
-                {
-                  key: 'id',
-                  type: 'nzInput',
-                  hide: true,
-                  props: {
-                    label: 'Mã',
-                    placeholder: 'Không cần nhập',
-                    required: true,
-                  },
-                },
-                {
-                  key: 'order_id',
-                  type: 'nzInput',
-                  hide: true,
-                  props: {
-                    label: 'Mã đơn',
-                    placeholder: 'Không cần nhập',
-                    required: true,
-                  },
-                },
+                // {
+                //   key: 'id',
+                //   type: 'nzInput',
+                //   className: 'hidden',
+                //   props: {
+                //     label: 'Mã',
+                //     placeholder: 'Không cần nhập',
+                //   },
+                // },
+                // {
+                //   key: 'order_id',
+                //   type: 'nzInput',
+                //   className: 'hidden',
+                //   props: {
+                //     label: 'Mã đơn',
+                //     placeholder: 'Không cần nhập',
+                //     required: true,
+                //   },
+                // },
                 {
                   key: 'material_Id',
                   type: 'nzDropdown',
                   props: {
                     label: 'Vật tư',
                     placeholder: 'Vật tư',
+                    valueProp: "id",
+                    labelProp: 'name',
                     required: true,
-                    options: this.customers
+                    change: this.onChangeMaterial.bind(this),
+                    // options: [
+                    //   ...(await this.genericGetOptions(
+                    //     'ExpandedApprovalLevel'
+                    //   ).toPromise()),
+                    // ]
                   },
+                  modelOptions: {
+                    updateOn: 'change',
+                  },
+                  hooks: {
+                    // onChanges: (field) => this.onChangeMaterial2(field)
+                  },
+                  expressionProperties: {
+                    'templateOptions.options': 'formState.materials'
+                  }
+                },
+                {
+                  key: 'unit',
+                  type: 'nzInput',
+                  props: {
+                    label: 'Đơn vị tính',
+                    placeholder: 'Đơn vị tính',
+                    required: true,
+                    disabled: true
+                  },
+                  // expressions: {
+                  //   value: (field: FormlyFieldConfig) => {
+                  //     return this.materials.length >0 ? this.materials.filter(d => d.value === field.model.material_Id)[0].unit : ''
+                  //   }
+                  // }
+
                 },
                 {
                   key: 'price',
@@ -162,6 +211,7 @@ export class DetailOrderComponent implements OnInit {
                     label: 'Đơn giá',
                     placeholder: 'Đơn giá',
                     required: true,
+                    disabled: true,
                     type: 'number'
                   },
                 },
@@ -172,7 +222,8 @@ export class DetailOrderComponent implements OnInit {
                     label: 'Đơn giá thay đổi',
                     placeholder: 'Đơn giá thay đổi',
                     required: true,
-                    type: 'number'
+                    type: 'number',
+                    change: this.onChangeQuantity.bind(this),
                   },
                 },
                 {
@@ -182,7 +233,8 @@ export class DetailOrderComponent implements OnInit {
                     label: 'Số lượng',
                     placeholder: 'Số lượng',
                     required: true,
-                    type: 'number'
+                    type: 'number',
+                    change: this.onChangeQuantity.bind(this),
                   },
                 },
                 {
@@ -199,9 +251,9 @@ export class DetailOrderComponent implements OnInit {
             }
           },
         ]
-  
+
       },
-  
+
     ];
   }
 
@@ -209,37 +261,55 @@ export class DetailOrderComponent implements OnInit {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-  customers: any[] = [];
+  customers: Optionss[] = [];
+  materials: any[] = [];
   itemsMenu: any[] = [];
   titlePage: string = '';
-  getLists() {
-    this._service.getCustomers('')
-      .subscribe(results => {
-        if (results.succeeded) {
-          this.customers = results.data.map((item: any) => {
-            return {
-              label: item.name,
-              value: item.id
-            }
-          });
-          this.onInitFields();
-        } 
+
+  getList() {
+    const _customers = this._service.getCustomers('')
+    const _materials = this._serviceMaterial.getMaterials('')
+    forkJoin({ _customerss: _customers, _materialss: _materials })
+      .subscribe((repons: any) => {
+        const { _customerss, _materialss } = repons
+        this.customers = _customerss.data
+        this.materials = _materialss.data
+        this.options.formState.customers = this.customers;
+        this.options.formState.materials = this.materials;
+        this.onInitFields();
       })
   }
 
   ngOnInit() {
-    this.getLists();
-    this.itemsMenu =  [
-      { label: 'Home' , routerLink: '/home' },
+    this.getList();
+    const dataRouter: any = this._activatedRoute.data;
+    this.itemsMenu = [
+      { label: 'Home', routerLink: '/home' },
       { label: 'Danh sách đơn hàng', routerLink: '/order/list' },
-      { label: 'Thêm ' },
+      { label: dataRouter['_value'].title },
     ]
-    if (this.id > 0) {
-      this.getDetailMaterial();
+    if(this.isDialog) {
+      this.getDetailOrder();
+    }else {
+      this.handleParams();
     }
+   
   }
 
-  getDetailMaterial() {
+  handleParams() {
+    this._activatedRoute.queryParamMap
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe((params) => {
+      const paramsObject: any = { ...params.keys, ...params };
+      const dataRouter = paramsObject.params;
+      this.id = dataRouter.id;
+      if(this.id) {
+        this.getDetailOrder();
+      }
+    });
+  };
+
+  getDetailOrder() {
     this._apiService.getOrdersById(this.id).subscribe(results => {
       if (results) {
         this.model = results;
@@ -247,22 +317,57 @@ export class DetailOrderComponent implements OnInit {
     })
   }
 
-  submitMaterial() {
+  submitOrder() {
     if (this.form.valid) {
       this._spinner.show();
       const object: any = this.form.getRawValue()
-      this._apiService.createOrder(this.form.getRawValue(), object.id ? 'put' :'post').subscribe(results => {
+      this._apiService.createOrder(this.form.getRawValue(), object.id ? 'put' : 'post').subscribe(results => {
         if (results) {
           this._messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thành công' });
           this._spinner.hide();
-          this.saveCallBack.emit()
+          this.form.reset();
         } else {
           this._messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Thất bại' });
           this._spinner.hide();
         }
-        console.log(results)
       })
     }
   }
 
+  addRowOrder() {
+    this.model.details.push({
+      id: 0,
+      order_Id: 0,
+      unit: "",
+      create_Date: "2023-04-07T02:21:12.921Z",
+      update_Date: "2023-04-07T02:21:12.921Z",
+      price: 0,
+      price_Change: 0,
+      quantity: 0,
+      amount: 0,
+      material_Id: null,
+      note: "string"
+    });
+    this.model.details = [...this.model.details];
+    this.onInitFields()
+
+  }
+
+  onChangeMaterial(field: any, event: any) {
+    if (this.materials.length > 0) {
+      const material = this.materials.filter(d => d.id === field.model.material_Id);
+      field.model.unit = material.length > 0 ? material[0].unit : '';
+      field.model.price = material.length > 0 ? material[0].price_Sell : 0;
+      this.onInitFields();
+    }
+  }
+
+  onChangeQuantity(field: any, event: any) {
+    if(field.model.quantity > 0) {
+      const amount = field.model.price_Change > 0 ? field.model.price_Change * field.model.quantity : field.model.quantity* field.model.price
+      field.model.amount = amount;
+      this.model.amount =  this.model.amount + amount;
+      this.onInitFields();
+    }
+  }
 }

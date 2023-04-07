@@ -66,6 +66,11 @@
 
 formly-field {
     .p-field {
+        input {
+            &:disabled {
+                background-color: #ccc !important;
+            }
+        }
         position: relative;
         padding-bottom: 18px;
         label {
@@ -84,6 +89,31 @@ formly-field {
         .field {
             &.grid{
                 margin-bottom: 0px;
+            }
+        }
+    }
+}
+
+.table_detail {
+    input {
+        &:disabled {
+            background-color: #ccc !important;
+        }
+    }
+    label {
+        display: none !important;
+    }
+    th, td{
+        padding-right: 10px;
+    }
+    formly-field {
+        .p-field {
+            small{
+                &.p-error{
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                }
             }
         }
     }

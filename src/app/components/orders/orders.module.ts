@@ -28,6 +28,7 @@ import { DetailOrderComponent } from './detail-order/detail-order.component';
 import { CustomerService } from '../customers/services/customer.services';
 import { CardModule } from 'primeng/card';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { MaterialService } from '../material/services/material.services';
 
 @NgModule({
     imports: [
@@ -60,7 +61,8 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
     providers: [
         OrderService,
         CustomerService,
-        ExcelService
+        ExcelService,
+        MaterialService
     ],
     declarations: [
         OrdersComponent,

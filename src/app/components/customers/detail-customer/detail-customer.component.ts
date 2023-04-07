@@ -73,7 +73,7 @@ export class DetailCustomerComponent implements OnInit {
         },
         {
           key: 'active',
-          type: 'nzInput',
+          type: 'nzCheckbox',
           props: {
             label: 'trạng thái',
             placeholder: 'Nhập trạng thái',

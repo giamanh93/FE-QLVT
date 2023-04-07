@@ -35,7 +35,6 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   @Input() noRowsTemplate: any = 'Không có kết quả phù hợp';
   @Input() floatingFilter: boolean = false;
   @Input() groupDefaultExpanded: number = 1;;
-  @Input() buttons = [];
   @Input() isShowButton: boolean = false;
   @Input() isShowTotalBottom: boolean = false;
   @Input() title: string = '';
@@ -84,7 +83,6 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   heightAuto = 0;
   tooltipShowDelay = 0;
   titlePage = '';
-  listsDataCloone = [];
   isRowMaster: any;
 
   constructor(

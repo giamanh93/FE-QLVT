@@ -13,7 +13,6 @@ export class HrmBreadCrumbComponent {
   @Input() title = '';
   constructor(
   ) { }
-  contentTypes = [];
 
   ngOnInit(): void {
     

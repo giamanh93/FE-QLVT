@@ -14,6 +14,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { NzDropdownComponent } from './nz-dropdown/nz-dropdown.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { NzCheckboxComponent } from './nz-checkbox/nz-checkbox.component';
+import { ArrayTypeComponent } from './array.type';
+import { TableModule } from 'primeng/table';
 
 
 
@@ -35,7 +37,7 @@ export function phoneValidator(control: AbstractControl): any {
         InputTextareaModule,
         FormlyPrimeNGModule,
         CheckboxModule,
-        
+        TableModule,
         FormlyModule.forRoot({
             validators: [{ name: 'phoneError', validation: phoneValidator }],
             types: [
@@ -60,6 +62,7 @@ export function phoneValidator(control: AbstractControl): any {
                     component: NzCheckboxComponent,
                     extends:'checkbox',
                 },
+                { name: 'array', component: ArrayTypeComponent },
                 
             ],
             validationMessages: [
@@ -76,7 +79,8 @@ export function phoneValidator(control: AbstractControl): any {
         NzInputComponent,
         NzTextareaComponent,
         NzDropdownComponent,
-        NzCheckboxComponent
+        NzCheckboxComponent,
+        ArrayTypeComponent,
     ]
 })
 export class NzFormLyModule { }

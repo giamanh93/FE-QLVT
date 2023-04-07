@@ -1,6 +1,6 @@
 
 
-  <div class="main-grid product-detail" style="padding-top: 22px;">
+  <div class="main-grid product-detail" style="padding-top: 22px;" *ngIf="!isDialog">
     <section>
         <div class="breadcrumb">
             <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
@@ -9,13 +9,15 @@
     </section>
 </div>
 <p-card>
-    <form [formGroup]="form" (ngSubmit)="submitMaterial()">
+    <form [formGroup]="form" (ngSubmit)="submitOrder()">
         <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
     
-       <div class="flex gap-2">
+       <div class="flex gap-2 justify-content-center">
         <button pButton class="p-button-sm" type="submit" icon="pi pi-send" >Gửi</button>
     
-        <button pButton class="p-button-sm p-button-danger"  (click)="form.reset()">Reset</button>
+        <button pButton class="p-button-sm p-button-danger" type="button"  (click)="form.reset()">Reset</button>
+
+        <button pButton class="p-button-sm p-button-success" type="button" (click)="addRowOrder()">Thêm dòng</button>
        </div>
       </form>
       

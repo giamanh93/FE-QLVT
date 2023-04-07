@@ -7,7 +7,6 @@
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
@@ -19,6 +18,8 @@
     "module": "es2020",
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "noImplicitReturns": false,
+    "strictNullChecks":false,
     "allowSyntheticDefaultImports": true,
     "lib": [
       "es2020",

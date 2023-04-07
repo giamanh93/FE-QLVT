@@ -1,6 +1,7 @@
 
 import { Component, OnInit, inject, ChangeDetectorRef, AfterViewInit, SimpleChanges, OnChanges, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 import { ColDef, GetRowIdFunc, GetRowIdParams } from 'ag-grid-community';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import queryString from 'query-string';
@@ -8,7 +9,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { ButtonAgGridComponent } from 'src/app/common/components/ag-grid-components/app-button-renderer';
 import { HrmBreadcrumb } from 'src/app/common/components/hrm-breadcrumb/hrm-breadcrumb.component';
 import { AgGridFn } from 'src/app/common/function/lib';
-import { Customer } from 'src/app/models/customer';
 import { Order } from 'src/app/models/order';
 import { OrderService } from './services/order.services';
 
@@ -27,10 +27,11 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     currentRecordStart: 0,
     currentRecordEnd: 0
   }
+ 
   idRow: number = 0;
   loadjs: number = 0;
   heightGrid: number = 0;
-  displayAddMaterial: boolean = false;
+  displayAddOrder: boolean = false;
   public getRowId: GetRowIdFunc = (params: GetRowIdParams) => {
     return params.data.id;
   };
@@ -91,8 +92,14 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     return {
       buttons: [
         {
-          onClick: this.editRow.bind(this),
+          onClick: this.ViewDetail.bind(this),
           label: 'Xem chi tiết',
+          icon: 'pi pi-check',
+          class: 'btn-primary mr5',
+        },
+        {
+          onClick: this.update.bind(this),
+          label: 'Chỉnh sửa',
           icon: 'pi pi-check',
           class: 'btn-primary mr5',
         },
@@ -107,9 +114,17 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     };
   }
 
-  editRow($event: any) {
+  ViewDetail($event: any) {
     this.idRow = $event.rowData.id;
-    this.displayAddMaterial = true;
+    this.displayAddOrder = true;
+  }
+
+  update($event: any) {
+    this.idRow = $event.rowData.id;
+    const params = {
+      id: this.idRow
+    }
+    this._router.navigate(['/order/list/update-order'], {queryParams: params})
   }
 
   delRow($event: any) {
@@ -211,7 +226,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   }
 
   callback() {
-    this.displayAddMaterial = false;
+    this.displayAddOrder = false;
     this.getLists();
   }
 
