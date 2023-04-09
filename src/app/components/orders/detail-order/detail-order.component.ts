@@ -9,6 +9,7 @@ import { CustomerService } from '../../customers/services/customer.services';
 import { ActivatedRoute } from '@angular/router';
 import { JSONSchema7 } from "json-schema";
 import { MaterialService } from '../../material/services/material.services';
+import { DatePipe } from '@angular/common';
 export interface MySchema {
   hidden: boolean;
   disabled: boolean;
@@ -29,6 +30,7 @@ export class DetailOrderComponent implements OnInit {
   private _messageService = inject(MessageService);
   private _spinner = inject(NgxSpinnerService);
   private _activatedRoute = inject(ActivatedRoute);
+  private $datepipe = inject(DatePipe);
   private readonly unsubscribe$: Subject<void> = new Subject();
   @Input() id: number = 0;
   @Input() isDialog: boolean = false;
