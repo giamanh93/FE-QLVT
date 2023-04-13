@@ -49,9 +49,9 @@
         </div>
 </div>
 
-<!-- <p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayAddMaterial" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '50vw', height: 'auto'}">
+<p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayAddSupplier" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '50vw', height: 'auto'}">
     <p-header>
        Thêm mới vật tư
     </p-header>
-       <app-detail-material *ngIf="displayAddMaterial" (saveCallBack)="callback()" [id]="idRow"></app-detail-material>
-</p-dialog> -->
+       <app-supplier-detail *ngIf="displayAddSupplier" (saveCallBack)="callback()" [id]="idRow"></app-supplier-detail>
+</p-dialog>

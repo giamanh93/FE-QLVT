@@ -17,6 +17,7 @@ export class NzDropdownComponent  extends FieldType<FieldTypeConfig> implements 
   }
 
   ngOnInit(): void {
+    console.log(this.field)
     const lists: any = this.field.props.options;
     this.listOptions = lists;
   }

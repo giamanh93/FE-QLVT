@@ -26,6 +26,7 @@ import { NzFormLyModule } from 'src/app/common/components/formLy/nzFormLy.module
 import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
 import { FormlyModule } from '@ngx-formly/core';
 import { MaterialService } from 'src/app/services/material/material.services';
+import { SupplierService } from 'src/app/services/supplier/supplier.service';
 
 @NgModule({
     imports: [
@@ -56,6 +57,7 @@ import { MaterialService } from 'src/app/services/material/material.services';
     ],
     providers: [
         MaterialService,
+        SupplierService,
         ExcelService
     ],
     declarations: [

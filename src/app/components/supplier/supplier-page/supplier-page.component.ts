@@ -56,6 +56,7 @@ export class SupplierPageComponent implements OnInit, AfterViewInit {
 	{ field: "name", header: "Tên vật tư", typeField: 'text' },
 	{ field: "phone", header: "Số điện thoại", typeField: 'text' },
 	{ field: "address", header: "Địa chỉ", typeField: 'text' },
+	{ field: "total_debt_amount", header: "Tổng tiền còn nợ", typeField: 'text' },
 	{ field: "active", header: "Trạng thái", typeField: 'text' },
 	{ field: "note", header: "Ghi chú", typeField: 'text' },
 ];
@@ -140,8 +141,8 @@ export class SupplierPageComponent implements OnInit, AfterViewInit {
     this.screenWidth = window.innerWidth;
     this.itemsBreadcrumb = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'vật tư' },
-      { label: 'Danh sách vật tư' },
+      { label: 'Nhà cung cấp' },
+      { label: 'Danh sách nhà cung cấp' },
     ];
     this.getLists();
 

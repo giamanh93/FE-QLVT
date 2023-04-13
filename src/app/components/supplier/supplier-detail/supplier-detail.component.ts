@@ -66,7 +66,7 @@ export class SupplierDetailComponent implements OnInit {
           type: 'nzInput',
           props: {
             label: 'Địa chỉ',
-            placeholder: 'Số điện thoại',
+            placeholder: 'Địa chỉ',
             required: true,
           },
         },

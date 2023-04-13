@@ -15,6 +15,7 @@ import { DefaultLayoutComponent } from './containers/default-layout';
                 { path: 'customer', loadChildren: () => import('../app/components/customers/customers.module').then(m => m.CustomersModule) },
                 { path: 'material', loadChildren: () => import('../app/components/material/material.module').then(m => m.MaterialModule) },
                 { path: 'order', loadChildren: () => import('../app/components/orders/orders.module').then(m => m.OrdersModule) },
+                { path: 'supplier', loadChildren: () => import('../app/components/supplier/supplier.module').then(m => m.SupplierModule) },
                   
               ]
           },

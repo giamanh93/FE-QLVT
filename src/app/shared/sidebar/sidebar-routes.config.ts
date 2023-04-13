@@ -11,6 +11,17 @@ export const menus = [
         ]
     },
     {
+        label: 'Nhà cung cấp',
+        code: "order",
+        icon: 'pi pi-user',
+        class: 'navigation-header',
+        // routerLink: 'early-warning-system',
+        items: [
+            { label: 'Danh sách Nhà cung cấp', routerLink: '/supplier/list', class: 'nav-item', },
+
+        ]
+    },
+    {
         label: 'Vật tư',
         code: "material",
         icon: 'pi pi-user',
@@ -32,6 +43,7 @@ export const menus = [
 
         ]
     },
+   
 
 
 ];

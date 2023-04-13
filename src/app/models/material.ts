@@ -7,7 +7,7 @@ export interface Material{
     total_Weight_Sell?: number,
     total_Weight_Renaining?: number,
     total_Invest_Amount?: number,
-    supplier?: string,
+    supplier_Id?: number,
     price_Buy?: number,
     active?: boolean,
     note?: string
