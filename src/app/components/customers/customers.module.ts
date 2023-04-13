@@ -14,18 +14,17 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ToolbarModule } from 'primeng/toolbar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CalendarModule } from 'primeng/calendar';
-import { AgGridModule } from 'ag-grid-angular';
 import { ListGridAngularModule } from 'src/app/common/components/list-grid-angular/list-grid-angular.module';
 import { LoadingGridModule } from 'src/app/common/components/loading-grid/loading-grid.module';
 import { ExcelService } from 'src/app/services/excel.service';
 import { CustomersRoutingModule } from './customers-routing.module';
 import { CustomersComponent } from './customers.component';
-import { CustomerService } from './services/customer.services';
 import { DetailCustomerComponent } from './detail-customer/detail-customer.component';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
 import { DialogModule } from 'primeng/dialog';
 import { NzFormLyModule } from 'src/app/common/components/formLy/nzFormLy.module';
+import { CustomerService } from 'src/app/services/customer/customer.services';
 
 export function IpValidatorMessage(error: any, field: FormlyFieldConfig) {
     return `"${field?.name}" is not a valid IP Address`;

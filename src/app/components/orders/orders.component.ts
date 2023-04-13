@@ -10,7 +10,7 @@ import { ButtonAgGridComponent } from 'src/app/common/components/ag-grid-compone
 import { HrmBreadcrumb } from 'src/app/common/components/hrm-breadcrumb/hrm-breadcrumb.component';
 import { AgGridFn } from 'src/app/common/function/lib';
 import { Order } from 'src/app/models/order';
-import { OrderService } from './services/order.services';
+import { OrderService } from 'src/app/services/order/order.services';
 
 @Component({
   selector: 'app-orders',

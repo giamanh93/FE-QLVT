@@ -1,15 +1,15 @@
-import { OrderService } from './../services/order.services';
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
 import { forkJoin, of, Subject, takeUntil } from 'rxjs';
-import { CustomerService } from '../../customers/services/customer.services';
 import { ActivatedRoute } from '@angular/router';
 import { JSONSchema7 } from "json-schema";
-import { MaterialService } from '../../material/services/material.services';
 import { DatePipe } from '@angular/common';
+import { OrderService } from 'src/app/services/order/order.services';
+import { CustomerService } from 'src/app/services/customer/customer.services';
+import { MaterialService } from 'src/app/services/material/material.services';
 export interface MySchema {
   hidden: boolean;
   disabled: boolean;

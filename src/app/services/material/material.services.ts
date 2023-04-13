@@ -4,13 +4,13 @@ import { catchError, Observable, of } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { ErrorService } from 'src/app/services/error.service';
 import { Responses } from 'src/app/models/responses';
-import { Customer } from 'src/app/models/customer';
-const baseUrl = 'https://localhost:7153/api';
+import { Material } from 'src/app/models/material';
+const baseUrl = 'http://10.50.10.208:6969/api';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CustomerService {
+export class MaterialService {
     private $http = inject(HttpClient);
     private $messageService = inject(MessageService);
     private $errorService = inject(ErrorService)
@@ -19,8 +19,9 @@ export class CustomerService {
         let headers = new HttpHeaders();
         return { headers: headers.set('Content-Type', 'application/json').set('accept', '*/*') };
       }
-    getCustomers(query: string): Observable<Responses> {
-        return this.$http.get<Responses>(baseUrl + `/Customers?` + query, this.getOptions()).pipe(
+
+    getMaterials(query: string): Observable<Responses> {
+        return this.$http.get<Responses>(baseUrl + `/Materials?` + query, this.getOptions()).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);
@@ -28,8 +29,8 @@ export class CustomerService {
         );
     }
 
-    getCustomersById(id: number): Observable<Responses> {
-        return this.$http.get<Responses>(baseUrl + `/Customers/${id}`).pipe(
+    getMaterialsById(id: number): Observable<Responses> {
+        return this.$http.get<Responses>(baseUrl + `/Materials/${id}`).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);
@@ -37,16 +38,16 @@ export class CustomerService {
         );
     }
 
-    createCustomer(params: Customer, method: string = 'post'): Observable<Responses> {
+    createMaterial(params: Material, method: string = 'post'): Observable<Responses> {
         if(method === 'post') {
-            return this.$http.post<Responses>(baseUrl + `/Customers`, {...params}).pipe(
+            return this.$http.post<Responses>(baseUrl + `/Materials`, {...params}).pipe(
                 catchError(error => {
                     this.handleError(error)
                     return of(error.error);
                 })
             );
         }else {
-            return this.$http.put<Responses>(baseUrl + `/Customers`, {...params}).pipe(
+            return this.$http.put<Responses>(baseUrl + `/Materials`, {...params}).pipe(
                 catchError(error => {
                     this.handleError(error)
                     return of(error.error);
@@ -56,8 +57,8 @@ export class CustomerService {
        
     }
 
-    updateCustomerById(params: Customer): Observable<Responses> {
-        return this.$http.put<Responses>(baseUrl + `/Customers`, {...params}).pipe(
+    updateMaterialById(params: Material): Observable<Responses> {
+        return this.$http.put<Responses>(baseUrl + `/Materials`, {...params}).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);
@@ -65,8 +66,8 @@ export class CustomerService {
         );
     }
 
-    deleteCustomerById(id: number): Observable<any> {
-        return this.$http.delete<any>(baseUrl + `/Customers?id=${id}`).pipe(
+    deleteMaterialById(id: number): Observable<Responses> {
+        return this.$http.delete<Responses>(baseUrl + `/Materials?id=${id}`).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);

@@ -1,0 +1,57 @@
+<div class="main-grid">
+    <section class="bread-crumb" >
+        <div class="flex bet middle">
+            <div class="md:col-8 sm:col-12 p-0">
+                <app-hrm-breadcrumb [items]="itemsBreadcrumb" ></app-hrm-breadcrumb>
+            </div>
+            <div class="md:col-4 p-0 flex justify-content-end align-items-center dropdown-branch">
+            </div>
+        </div>
+    </section>
+    <!-- this.organizeInfoService.setStocks(e.value); -->
+    
+    <div class="card ">
+       <div class=" toolbar">
+        <p-toolbar>
+            <div class="p-toolbar-group-start">
+                <!-- <p-button label="New" icon="pi pi-plus"></p-button> -->
+                <!-- <p-button label="Upload" icon="pi pi-upload" styleClass="p-button-success"></p-button> -->
+            </div>
+            <div class="p-toolbar-group-end gap-2">
+                <div class="p-inputgroup">
+                    <input type="text" [(ngModel)]="query.search" (change)="getLists()" pInputText placeholder="Keyword">   
+                    <button type="button" pButton pRipple icon="pi pi-search" styleClass="p-button-warn"></button>      
+                </div>
+                <p-button icon="pi pi-calendar" styleClass="p-button-success"></p-button>
+                <p-button icon="pi pi-plus" pTooltip="Thêm mới" (click)="addCustomer()" styleClass="p-button-success"></p-button>
+                <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button>
+            </div>
+        </p-toolbar>
+       </div>
+       <!-- [tableStyle]="{'min-height': this.heightGrid + 'px'}" -->
+       <div class="table-default" #container >
+        <app-list-grid-angular  *ngIf="!isLoading" [idGrid]="'my-table'" [isShowTotalBottom]="true" [groupDefaultExpanded]="0" [columnsWithAggregation]="['total_Purchase_Amount', 'total_Paid_Amount', 'total_Debt_Amount', 'name']"
+            [listsData]="listDatas" [height]="heightGrid" [autoGroupColumnDef]="autoGroupColumnDef" 
+            [columnDefs]="columnDefs" [getContextMenuItems]="getContextMenuItems" [getRowId]="getRowId"></app-list-grid-angular>
+            <app-loading-grid *ngIf="isLoading" [cols]="cols" [lists]="20"></app-loading-grid>
+        <!-- <div class="paginator flex justify-content-end align-items-center" style="background-color: #fff;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        left: 0;">
+            <span>Từ {{ countRecord.currentRecordStart }} đến {{ countRecord.currentRecordEnd }} trên tổng số {{ countRecord.totalRecord }} kết quả</span>
+            <p-paginator [rows]="query.size" [totalRecords]="countRecord.totalRecord" [first]="first"
+                (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
+            </p-paginator>
+        </div> -->
+        </div>
+
+        </div>
+</div>
+
+<!-- <p-dialog styleClass="popup-btngroup-edit-detail"  [(visible)]="displayAddMaterial" [draggable]="false"  [resizable]="false" [autoZIndex]="true" [modal]="true" [style]="{width: '50vw', height: 'auto'}">
+    <p-header>
+       Thêm mới vật tư
+    </p-header>
+       <app-detail-material *ngIf="displayAddMaterial" (saveCallBack)="callback()" [id]="idRow"></app-detail-material>
+</p-dialog> -->

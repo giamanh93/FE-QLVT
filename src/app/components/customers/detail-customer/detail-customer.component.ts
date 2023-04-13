@@ -3,9 +3,7 @@ import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { of } from 'rxjs';
-import { NzInputComponent } from 'src/app/common/components/formLy/nz-input/nz-input.component';
-import { CustomerService } from '../services/customer.services';
+import { CustomerService } from 'src/app/services/customer/customer.services';
 
 
 @Component({

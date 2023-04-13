@@ -1,0 +1,10 @@
+<form [formGroup]="form" (ngSubmit)="submitMaterial()">
+    <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
+
+   <div class="flex gap-2">
+    <button pButton class="p-button-sm" type="submit" icon="pi pi-send" >Gửi</button>
+
+    <button pButton class="p-button-sm p-button-danger"  (click)="form.reset()">Reset</button>
+   </div>
+  </form>
+  

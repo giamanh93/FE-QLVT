@@ -20,12 +20,12 @@ import { LoadingGridModule } from 'src/app/common/components/loading-grid/loadin
 import { ExcelService } from 'src/app/services/excel.service';
 import { MaterialRoutingModule } from './material-routing.module';
 import { MaterialComponent } from './material.component';
-import { MaterialService } from './services/material.services';
 import { DetailMaterialComponent } from './detail-material/detail-material.component';
 import { DialogModule } from 'primeng/dialog';
 import { NzFormLyModule } from 'src/app/common/components/formLy/nzFormLy.module';
 import { FormlyPrimeNGModule } from '@ngx-formly/primeng';
 import { FormlyModule } from '@ngx-formly/core';
+import { MaterialService } from 'src/app/services/material/material.services';
 
 @NgModule({
     imports: [

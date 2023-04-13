@@ -4,24 +4,23 @@ import { catchError, Observable, of } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { ErrorService } from 'src/app/services/error.service';
 import { Responses } from 'src/app/models/responses';
-import { Order } from 'src/app/models/order';
-const baseUrl = 'https://localhost:7153/api';
+import { Supplier } from 'src/app/models/supplier';
+const baseUrl = 'http://10.50.10.208:6969/api';
 
 @Injectable({
     providedIn: 'root'
 })
-export class OrderService {
+export class SupplierService {
     private $http = inject(HttpClient);
     private $messageService = inject(MessageService);
     private $errorService = inject(ErrorService)
     public getOptions() {
-        const extSessionId = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOlt7ImF1dGhvcml0eSI6IlJPTEVfQURNSU4ifV0sImlhdCI6MTY4MDY4Njg2MywiZXhwIjoxNjgwNjk1ODYzfQ.7q_TKdPewj6suK0mboygywM82nbx3Q6QCQUUUv6hm4c`
         let headers = new HttpHeaders();
         return { headers: headers.set('Content-Type', 'application/json').set('accept', '*/*') };
       }
-      
-    getOrders(query: string): Observable<Responses> {
-        return this.$http.get<Responses>(baseUrl + `/Orders?` + query, this.getOptions()).pipe(
+
+    getSuppliers(query: string): Observable<Responses> {
+        return this.$http.get<Responses>(baseUrl + `/Suppliers?` + query, this.getOptions()).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);
@@ -29,8 +28,8 @@ export class OrderService {
         );
     }
 
-    getOrdersById(id: number): Observable<Responses> {
-        return this.$http.get<Responses>(baseUrl + `/Orders/${id}`).pipe(
+    getSuppliersById(id: number): Observable<Responses> {
+        return this.$http.get<Responses>(baseUrl + `/Suppliers/${id}`).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);
@@ -38,16 +37,16 @@ export class OrderService {
         );
     }
 
-    createOrder(params: Order, method: string = 'post'): Observable<Responses> {
+    createSupplier(params: Supplier, method: string = 'post'): Observable<Responses> {
         if(method === 'post') {
-            return this.$http.post<Responses>(baseUrl + `/Orders`, {...params}).pipe(
+            return this.$http.post<Responses>(baseUrl + `/Suppliers`, {...params}).pipe(
                 catchError(error => {
                     this.handleError(error)
                     return of(error.error);
                 })
             );
         }else {
-            return this.$http.put<Responses>(baseUrl + `/Orders`, {...params}).pipe(
+            return this.$http.put<Responses>(baseUrl + `/Suppliers`, {...params}).pipe(
                 catchError(error => {
                     this.handleError(error)
                     return of(error.error);
@@ -57,8 +56,8 @@ export class OrderService {
        
     }
 
-    updateOrderById(params: Order): Observable<Responses> {
-        return this.$http.put<Responses>(baseUrl + `/Orders`, {...params}).pipe(
+    updateSupplierById(params: Supplier): Observable<Responses> {
+        return this.$http.put<Responses>(baseUrl + `/Suppliers`, {...params}).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);
@@ -66,8 +65,8 @@ export class OrderService {
         );
     }
 
-    deleteOrderById(id: number): Observable<Responses> {
-        return this.$http.delete<Responses>(baseUrl + `/Orders?id=${id}`).pipe(
+    deleteSupplierById(id: number): Observable<Responses> {
+        return this.$http.delete<Responses>(baseUrl + `/Suppliers?id=${id}`).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);

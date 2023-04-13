@@ -1,5 +1,3 @@
-import { MaterialService } from './services/material.services';
-
 import { Component, OnInit, inject, ChangeDetectorRef, AfterViewInit, SimpleChanges, OnChanges, HostListener } from '@angular/core';
 import { ColDef, GetRowIdFunc, GetRowIdParams } from 'ag-grid-community';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -9,6 +7,7 @@ import { ButtonAgGridComponent } from 'src/app/common/components/ag-grid-compone
 import { HrmBreadcrumb } from 'src/app/common/components/hrm-breadcrumb/hrm-breadcrumb.component';
 import { AgGridFn } from 'src/app/common/function/lib';
 import { Customer } from 'src/app/models/customer';
+import { MaterialService } from 'src/app/services/material/material.services';
 @Component({
 	selector: 'app-material',
 	templateUrl: './material.component.html',

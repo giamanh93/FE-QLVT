@@ -7,14 +7,13 @@ import { ButtonAgGridComponent } from 'src/app/common/components/ag-grid-compone
 import { HrmBreadcrumb } from 'src/app/common/components/hrm-breadcrumb/hrm-breadcrumb.component';
 import { AgGridFn } from 'src/app/common/function/lib';
 import { Customer } from 'src/app/models/customer';
-import { CustomerService } from 'src/app/services/customer/customer.services';
+import { SupplierService } from 'src/app/services/supplier/supplier.service';
 @Component({
-  selector: 'app-customers',
-  templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.scss']
+  selector: 'app-supplier-page',
+  templateUrl: './supplier-page.component.html',
+  styleUrls: ['./supplier-page.component.scss']
 })
-
-export class CustomersComponent implements OnInit, AfterViewInit {
+export class SupplierPageComponent implements OnInit, AfterViewInit {
   itemsBreadcrumb: HrmBreadcrumb[] = [];
   indexTab: number = 0;
   screenWidth: number = 0;
@@ -26,12 +25,12 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   idRow: number = 0;
   loadjs: number = 0;
   heightGrid: number = 0;
-  displayAddCustomer: boolean = false;
+  displayAddSupplier: boolean = false;
   public getRowId: GetRowIdFunc = (params: GetRowIdParams) => {
     return params.data.id;
   };
   private readonly unsubscribe$: Subject<void> = new Subject();
-  private _service = inject(CustomerService);
+  private _service = inject(SupplierService);
   private _messageService = inject(MessageService);
   private _changeDetech = inject(ChangeDetectorRef);
   private _confirmationService = inject(ConfirmationService);
@@ -53,15 +52,14 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   };
   public columnDefs: ColDef[] = [];
   public cols: any[] = [
-    { field: "id", header: "Mã Id", typeField: 'text' },
-    { field: "name", header: "Khách hàng", typeField: 'text' },
-    { field: "phone", header: "Số điện thoại", typeField: 'text' },
-    { field: "total_Purchase_Amount", header: "Tổng tiền mua hàng", typeField: 'decimal' },
-    { field: "total_Paid_Amount", header: "Tổng tiền đã trả", typeField: 'decimal' },
-    { field: "total_Debt_Amount", header: "Tổng tiền còn thiếu", typeField: 'decimal' },
-    { field: "active", header: "Trạng thái", typeField: 'text' },
-    { field: "note", header: "Ghi chú", typeField: 'text' },
-  ];
+	{ field: "id", header: "Mã Id", typeField: 'text' },
+	{ field: "name", header: "Tên vật tư", typeField: 'text' },
+	{ field: "phone", header: "Số điện thoại", typeField: 'text' },
+	{ field: "address", header: "Địa chỉ", typeField: 'text' },
+	{ field: "active", header: "Trạng thái", typeField: 'text' },
+	{ field: "note", header: "Ghi chú", typeField: 'text' },
+];
+
 
   ngAfterViewInit() {
     this._changeDetech.detectChanges();
@@ -105,14 +103,14 @@ export class CustomersComponent implements OnInit, AfterViewInit {
 
   editRow($event: any) {
     this.idRow = $event.rowData.id;
-    this.displayAddCustomer = true;
+    this.displayAddSupplier = true;
   }
 
   delRow($event: any) {
     this._confirmationService.confirm({
       message: 'Bạn có chắc chắn muốn xóa bản ghi này?',
       accept: () => {
-        this._service.deleteCustomerById($event.rowData.id)
+        this._service.deleteSupplierById($event.rowData.id)
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe((results: any) => {
             if (results) {
@@ -142,8 +140,8 @@ export class CustomersComponent implements OnInit, AfterViewInit {
     this.screenWidth = window.innerWidth;
     this.itemsBreadcrumb = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Khách hàng' },
-      { label: 'Danh sách khách hàng' },
+      { label: 'vật tư' },
+      { label: 'Danh sách vật tư' },
     ];
     this.getLists();
 
@@ -153,7 +151,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
     this.isLoading = true;
     this.listDatas = [];
     const queryParams = queryString.stringify(this.query);
-    this._service.getCustomers(queryParams)
+    this._service.getSuppliers(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
         if (results.succeeded) {
@@ -202,12 +200,12 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   }
 
   addCustomer() {
-    this.idRow = 0;
-    this.displayAddCustomer = true;
+	this.idRow = 0
+    this.displayAddSupplier = true;
   }
 
   callback() {
-    this.displayAddCustomer = false;
+    this.displayAddSupplier = false;
     this.getLists();
   }
 

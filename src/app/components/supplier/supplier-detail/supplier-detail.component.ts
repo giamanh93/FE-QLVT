@@ -3,16 +3,16 @@ import {  FormGroup } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MessageService } from 'primeng/api';
-import { MaterialService } from 'src/app/services/material/material.services';
+import { SupplierService } from 'src/app/services/supplier/supplier.service';
 
 
 @Component({
-  selector: 'app-detail-material',
-  templateUrl: './detail-material.component.html',
-  styleUrls: ['./detail-material.component.scss']
+  selector: 'app-supplier-detail',
+  templateUrl: './supplier-detail.component.html',
+  styleUrls: ['./supplier-detail.component.scss']
 })
-export class DetailMaterialComponent implements OnInit {
-  private _apiService = inject(MaterialService);
+export class SupplierDetailComponent implements OnInit {
+  private _apiService = inject(SupplierService);
   private _messageService = inject(MessageService);
   private _spinner = inject(NgxSpinnerService);
   @Input() id: number = 0;
@@ -50,41 +50,24 @@ export class DetailMaterialComponent implements OnInit {
           },
         },
         {
-          key: 'unit',
+          key: 'phone',
           type: 'nzInput',
           props: {
-            label: 'Đơn vị',
-            placeholder: 'Đơn vị',
+            label: 'Số điện thoại',
+            placeholder: 'Số điện thoại',
             required: true,
           },
-        },
-       
-        {
-          key: 'price_Sell',
-          type: 'nzInput',
-          props: {
-            label: 'Đơn giá bán',
-            placeholder: 'Đơn giá bán',
-            required: true,
-            type: 'number'
+          validators: {
+            validation: ['phoneError'],
           },
         },
         {
-          key: 'price_Buy',
+          key: 'address',
           type: 'nzInput',
           props: {
-            label: 'Đơn giá mua',
-            placeholder: 'Đơn giá mua',
+            label: 'Địa chỉ',
+            placeholder: 'Số điện thoại',
             required: true,
-            type: 'number'
-          },
-        },
-        {
-          key: 'supplier',
-          type: 'nzInput',
-          props: {
-            label: 'Nhà cung cấp',
-            placeholder: 'Nhập địa chỉ',
           },
         },
         {
@@ -111,12 +94,12 @@ export class DetailMaterialComponent implements OnInit {
 
   ngOnInit() {
     if (this.id > 0) {
-      this.getDetailMaterial();
+      this.getDetailSupplier();
     }
   }
 
-  getDetailMaterial() {
-    this._apiService.getMaterialsById(this.id).subscribe(results => {
+  getDetailSupplier() {
+    this._apiService.getSuppliersById(this.id).subscribe(results => {
       if (results) {
         this.model = results;
       }
@@ -127,7 +110,7 @@ export class DetailMaterialComponent implements OnInit {
     if (this.form.valid) {
       this._spinner.show();
       const object: any = this.form.getRawValue()
-      this._apiService.createMaterial(this.form.getRawValue(), object.id ? 'put' :'post').subscribe(results => {
+      this._apiService.createSupplier(this.form.getRawValue(), object.id ? 'put' :'post').subscribe(results => {
         if (results) {
           this._messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thành công' });
           this._spinner.hide();
