@@ -33,40 +33,27 @@ export class DetailOrderComponent implements OnInit {
   private $datepipe = inject(DatePipe);
   private readonly unsubscribe$: Subject<void> = new Subject();
   @Input() id: number = 0;
+  @Input() reason: number = 1;
   @Input() isDialog: boolean = false;
   @Output() saveCallBack = new EventEmitter<any>();
   form = new FormGroup({});
-  model: any = {
-    id: 0,
-    code: "",
-    unit: "",
-    create_Date: new Date(),
-    update_Date: new Date(),
-    amount: 0,
-    note: "",
-    cust_Id: null,
-    details: [
-      {
-        id: 0,
-        order_Id: 0,
-        unit: "",
-        create_Date: "2023-04-07T02:21:12.921Z",
-        update_Date: "2023-04-07T02:21:12.921Z",
-        price: 0,
-        price_Change: 0,
-        quantity: 0,
-        amount: 0,
-        material_Id: null,
-        note: "string"
-      },
-
-    ]
-  };
+  model: any = { };
+  dataRouter: any = { };
   public options: FormlyFormOptions = {
     formState: {
       awesomeIsForced: true,
       cust_Id: [],
-      material_Id: []
+      material_Id: [],
+      reasons: [
+        {
+          id: 1,
+          name: 'Kiểu nhập'
+        },
+        {
+          id: 2,
+          name: 'Kiểu xuất'
+        },
+      ]
     },
   };
   fields: FormlyFieldConfig[] = [];
@@ -89,12 +76,26 @@ export class DetailOrderComponent implements OnInit {
             },
           },
           {
+            key: 'reason',
+            type: 'nzDropdown',
+            defaultValue: this.dataRouter.url === 'create-order' || this.dataRouter.url === 'update-order' ? 1 : 2,
+            props: {
+              label: 'Kiểu đơn hàng',
+              placeholder: 'Kiểu đơn hàng',
+              required: true,
+              disabled: true
+            },
+            expressionProperties: {
+              'templateOptions.options': 'formState.reasons'
+            }
+          },
+          {
             key: 'code',
             type: 'nzInput',
             props: {
               label: 'Mã hàng',
               placeholder: 'Mã hàng',
-              required: true,
+              required: true
             },
           },
           {
@@ -285,6 +286,7 @@ export class DetailOrderComponent implements OnInit {
   ngOnInit() {
     this.getList();
     const dataRouter: any = this._activatedRoute.data;
+    this.dataRouter = this._activatedRoute.data;
     this.itemsMenu = [
       { label: 'Home', routerLink: '/home' },
       { label: 'Danh sách đơn hàng', routerLink: '/order/list' },

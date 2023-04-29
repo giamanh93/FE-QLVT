@@ -1,3 +1,4 @@
+import { ImportListComponent } from './import-list/import-list.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DetailOrderComponent } from './detail-order/detail-order.component';
@@ -15,7 +16,7 @@ import { OrdersComponent } from './orders.component';
             path: 'list/create-order'
             , component: DetailOrderComponent
             , data: {
-                title: 'Tạo mới đơn hàng',
+                title: 'Tạo mới đơn hàng xuất',
                 url: 'create-order',
             },
         },
@@ -23,8 +24,26 @@ import { OrdersComponent } from './orders.component';
             path: 'list/update-order'
             , component: DetailOrderComponent
             , data: {
-                title: 'Chỉnh sửa đơn hàng',
+                title: 'Chỉnh sửa đơn hàng xuất',
                 url: 'create-order',
+            },
+        },
+
+        { path: 'import-list', component: ImportListComponent },
+        {
+            path: 'import-list/create-import'
+            , component: DetailOrderComponent
+            , data: {
+                title: 'Tạo mới đơn hàng nhập',
+                url: 'create-import',
+            },
+        },
+        {
+            path: 'import-list/update-import'
+            , component: DetailOrderComponent
+            , data: {
+                title: 'Chỉnh sửa đơn hàng nhập',
+                url: 'update-import',
             },
         },
 

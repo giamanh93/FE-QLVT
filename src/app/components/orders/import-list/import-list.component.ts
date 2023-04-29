@@ -1,4 +1,3 @@
-
 import { Component, OnInit, inject, ChangeDetectorRef, AfterViewInit, SimpleChanges, OnChanges, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormlyFieldConfig } from '@ngx-formly/core';
@@ -12,13 +11,14 @@ import { AgGridFn } from 'src/app/common/function/lib';
 import { Order } from 'src/app/models/order';
 import { OrderService } from 'src/app/services/order/order.services';
 
+
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss']
+  selector: 'app-import-list',
+  templateUrl: './import-list.component.html',
+  styleUrls: ['./import-list.component.scss']
 })
 
-export class OrdersComponent implements OnInit, AfterViewInit {
+export class ImportListComponent implements OnInit, AfterViewInit {
   itemsBreadcrumb: HrmBreadcrumb[] = [];
   indexTab: number = 0;
   screenWidth: number = 0;
@@ -162,7 +162,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     this.itemsBreadcrumb = [
       { label: 'Trang chủ', routerLink: '/home' },
       { label: 'Đơn hàng' },
-      { label: 'Danh sách đơn hàng xuất' },
+      { label: 'Danh sách đơn hàng nhập' },
     ];
     this.getLists();
 
