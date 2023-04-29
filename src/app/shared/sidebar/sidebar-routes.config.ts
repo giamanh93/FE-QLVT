@@ -39,7 +39,8 @@ export const menus = [
         class: 'navigation-header',
         // routerLink: 'early-warning-system',
         items: [
-            { label: 'Danh sách đơn hàng', routerLink: '/order/list', class: 'nav-item', },
+            { label: 'Danh sách đơn hàng nhập', routerLink: '/order/import-list', class: 'nav-item', },
+            { label: 'Danh sách đơn hàng xuất', routerLink: '/order/list', class: 'nav-item', },
 
         ]
     },
