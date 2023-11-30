@@ -1,4 +1,3 @@
-
 import { Component, OnInit, inject, ChangeDetectorRef, AfterViewInit, SimpleChanges, OnChanges, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormlyFieldConfig } from '@ngx-formly/core';
@@ -12,13 +11,14 @@ import { AgGridFn } from 'src/app/common/function/lib';
 import { Order } from 'src/app/models/order';
 import { OrderService } from 'src/app/services/order/order.services';
 
+
 @Component({
-  selector: 'app-orders',
-  templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss']
+  selector: 'app-import-list',
+  templateUrl: './import-list.component.html',
+  styleUrls: ['./import-list.component.scss']
 })
 
-export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked {
+export class ImportListComponent implements OnInit, AfterViewInit {
   itemsBreadcrumb: HrmBreadcrumb[] = [];
   indexTab: number = 0;
   screenWidth: number = 0;
@@ -26,12 +26,15 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy, AfterV
     totalRecord: 0,
     currentRecordStart: 0,
     currentRecordEnd: 0
-  };
-
+  }
+ 
   idRow: number = 0;
   loadjs: number = 0;
   heightGrid: number = 0;
   displayAddOrder: boolean = false;
+  public getRowId: GetRowIdFunc = (params: GetRowIdParams) => {
+    return params.data.id;
+  };
   private readonly unsubscribe$: Subject<void> = new Subject();
   private _service = inject(OrderService);
   private _messageService = inject(MessageService);
@@ -41,7 +44,7 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy, AfterV
   public listDatas: Order[] = [];
   public listDatasLoading: any[] = Array(20).fill(1).map((x, i) => i);
   public isLoading: boolean = false;
-  public query: any = {};
+  public query: any = {}
   public autoGroupColumnDef: ColDef = {
     minWidth: 300,
     cellRendererParams: {
@@ -56,19 +59,14 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy, AfterV
   };
   public columnDefs: ColDef[] = [];
   public cols: any[] = [
-    { field: 'id', header: 'Mã Id', typeField: 'text' },
-    { field: 'code', header: 'Mã đơn', typeField: 'text' },
-    { field: 'cust_Name', header: 'Khách hàng', typeField: 'text' },
-    { field: 'amount', header: 'Tổng tiền', typeField: 'decimal' },
-    { field: 'note', header: 'Ghi chú', typeField: 'text' },
-    { field: 'create_Date', header: 'Ngày tạo', typeField: 'datetime' },
-    { field: 'update_Date', header: 'Ngày cập nhật', typeField: 'datetime' },
+    { field: "id", header: "Mã Id", typeField: 'text' },
+    { field: "code", header: "Mã đơn", typeField: 'text' },
+    { field: "create_date", header: "Ngày tạo", typeField: 'text' },
+    { field: "update_date", header: "Ngày cập nhật", typeField: 'text' },
+    { field: "amount", header: "Tổng KL", typeField: 'decimal' },
+    { field: "cust_id", header: "Khách hàng", typeField: 'decimal' },
+    { field: "note", header: "Ghi chú", typeField: 'text' },
   ];
-
-  first: number = 1;
-  public getRowId: GetRowIdFunc = (params: GetRowIdParams) => {
-    return params.data.id;
-  }
 
   ngAfterViewInit() {
     this._changeDetech.detectChanges();
@@ -87,7 +85,7 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy, AfterV
         checkboxSelection: false,
         field: 'checkbox'
       }
-    ];
+    ]
   }
 
   showButtons(event: any) {
@@ -125,8 +123,8 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy, AfterV
     this.idRow = $event.rowData.id;
     const params = {
       id: this.idRow
-    };
-    this._router.navigate(['/order/list/update-order'], {queryParams: params});
+    }
+    this._router.navigate(['/order/list/update-order'], {queryParams: params})
   }
 
   delRow($event: any) {
@@ -159,12 +157,12 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy, AfterV
   }
 
   ngOnInit(): void {
-    this.onInitGrid();
+    this.onInitGrid()
     this.screenWidth = window.innerWidth;
     this.itemsBreadcrumb = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'Đơn nhập/xuất' },
-      { label: 'Danh sách nhập/ xuất' },
+      { label: 'Đơn hàng' },
+      { label: 'Danh sách đơn hàng nhập' },
     ];
     this.getLists();
 
@@ -186,8 +184,10 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy, AfterV
           this.isLoading = false;
           this._messageService.add({ severity: 'error', summary: 'Error Message', detail: results.message });
         }
-      });
+      })
   }
+
+  first: number = 1;
   paginate(event: any) {
     this.query.page = event.page + 1;
     this.first = event.first;
@@ -198,21 +198,21 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy, AfterV
   fnCountRecord(results: any) {
     this.countRecord.totalRecord = results.totalElements;
     this.countRecord.currentRecordStart = this.query.page === 1 ? this.query.page = 1 : this.countRecord.currentRecordEnd;
-    this.countRecord.currentRecordEnd = this.query.page === 1 ? this.query.size : this.query.page * Number(this.query.size);
+    this.countRecord.currentRecordEnd = this.query.page === 1 ? this.query.size : this.query.page * Number(this.query.size)
   }
 
   ngAfterViewChecked(): void {
-    const a: any = document.querySelector('.header');
-    const b: any = document.querySelector('.sidebarBody');
-    const c: any = document.querySelector('.breadcrumb');
+    const a: any = document.querySelector(".header");
+    const b: any = document.querySelector(".sidebarBody");
+    const c: any = document.querySelector(".breadcrumb");
     // const e: any = document.querySelector(".paginator");
-    const d: any = document.querySelector('.toolbar');
-    this.loadjs++;
+    const d: any = document.querySelector(".toolbar");
+    this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight && d) {
         const totalHeight = a.clientHeight + b.clientHeight + c.clientHeight + d.clientHeight + 25;
         this.heightGrid = window.innerHeight - totalHeight;
-        console.log(this.heightGrid);
+        console.log(this.heightGrid)
         this._changeDetech.detectChanges();
       } else {
         this.loadjs = 0;
@@ -221,8 +221,8 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy, AfterV
   }
 
   addCustomer() {
-    this.idRow = 0;
-    this._router.navigate(['/order/list/create-order']);
+    this.idRow = 0
+    this._router.navigate(['/order/list/create-order']); 
   }
 
   callback() {
@@ -231,7 +231,7 @@ export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy, AfterV
   }
 
   getContextMenuItems(params: any) {
-    const result = [
+    var result = [
       'copy',
       'paste',
       'separator',

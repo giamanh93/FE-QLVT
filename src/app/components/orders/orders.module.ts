@@ -29,6 +29,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { OrderService } from 'src/app/services/order/order.services';
 import { CustomerService } from 'src/app/services/customer/customer.services';
 import { MaterialService } from 'src/app/services/material/material.services';
+import { ImportListComponent } from './import-list/import-list.component';
 
 @NgModule({
     imports: [
@@ -66,7 +67,8 @@ import { MaterialService } from 'src/app/services/material/material.services';
     ],
     declarations: [
         OrdersComponent,
-        DetailOrderComponent
+        DetailOrderComponent,
+        ImportListComponent
      ]
 })
 export class OrdersModule { }

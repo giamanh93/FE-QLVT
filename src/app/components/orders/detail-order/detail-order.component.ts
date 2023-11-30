@@ -34,40 +34,27 @@ export class DetailOrderComponent implements OnInit, OnDestroy {
   private $datepipe = inject(DatePipe);
   private readonly unsubscribe$: Subject<void> = new Subject();
   @Input() id: number = 0;
+  @Input() reason: number = 1;
   @Input() isDialog: boolean = false;
   @Output() saveCallBack = new EventEmitter<any>();
   form = new FormGroup({});
-  model: any = {
-    id: 0,
-    code: '',
-    unit: '',
-    create_Date: new Date(),
-    update_date: new Date(),
-    amount: 0,
-    note: '',
-    cust_Id: null,
-    details: [
-      {
-        id: 0,
-        order_Id: 0,
-        unit: '',
-        price: 0,
-        create_Date: new Date(),
-        update_date: new Date(),
-        price_Change: 0,
-        quantity: 0,
-        amount: 0,
-        material_Id: null,
-        note: 'string'
-      },
-
-    ]
-  };
+  model: any = { };
+  dataRouter: any = { };
   public options: FormlyFormOptions = {
     formState: {
       awesomeIsForced: true,
       cust_Id: [],
-      material_Id: []
+      material_Id: [],
+      reasons: [
+        {
+          id: 1,
+          name: 'Kiểu nhập'
+        },
+        {
+          id: 2,
+          name: 'Kiểu xuất'
+        },
+      ]
     },
   };
   fields: FormlyFieldConfig[] = [];
@@ -94,12 +81,26 @@ export class DetailOrderComponent implements OnInit, OnDestroy {
             },
           },
           {
+            key: 'reason',
+            type: 'nzDropdown',
+            defaultValue: this.dataRouter.url === 'create-order' || this.dataRouter.url === 'update-order' ? 1 : 2,
+            props: {
+              label: 'Kiểu đơn hàng',
+              placeholder: 'Kiểu đơn hàng',
+              required: true,
+              disabled: true
+            },
+            expressionProperties: {
+              'templateOptions.options': 'formState.reasons'
+            }
+          },
+          {
             key: 'code',
             type: 'nzInput',
             props: {
               label: 'Mã hàng',
               placeholder: 'Mã hàng',
-              required: true,
+              required: true
             },
           },
           {
@@ -286,6 +287,7 @@ export class DetailOrderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getList();
     const dataRouter: any = this._activatedRoute.data;
+    this.dataRouter = this._activatedRoute.data;
     this.itemsMenu = [
       { label: 'Home', routerLink: '/home' },
       { label: 'Danh sách đơn hàng', routerLink: '/order/list' },
@@ -322,12 +324,8 @@ export class DetailOrderComponent implements OnInit, OnDestroy {
   submitOrder() {
     if (this.form.valid) {
       this._spinner.show();
-      const object: any = this.form.getRawValue();
-      const params = {
-        ...object,
-        update_date: new Date()
-      }
-      this._apiService.createOrder(params, object.id ? 'put' : 'post').subscribe(results => {
+      const object: any = this.form.getRawValue()
+      this._apiService.createOrder(this.form.getRawValue(), object.id ? 'put' : 'post').subscribe(results => {
         if (results) {
           this._messageService.add({ severity: 'success', summary: 'Thông báo', detail: 'Thành công' });
           this._spinner.hide();
