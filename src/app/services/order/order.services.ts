@@ -19,7 +19,7 @@ export class OrderService {
         let headers = new HttpHeaders();
         return { headers: headers.set('Content-Type', 'application/json').set('accept', '*/*') };
       }
-      
+
     getOrders(query: string): Observable<Responses> {
         return this.$http.get<Responses>(baseUrl + `/Orders?` + query, this.getOptions()).pipe(
             catchError(error => {
@@ -54,7 +54,7 @@ export class OrderService {
                 })
             );
         }
-       
+
     }
 
     updateOrderById(params: Order): Observable<Responses> {
@@ -67,7 +67,7 @@ export class OrderService {
     }
 
     deleteOrderById(id: number): Observable<Responses> {
-        return this.$http.delete<Responses>(baseUrl + `/Orders?id=${id}`).pipe(
+        return this.$http.delete<Responses>(baseUrl + `/Orders/${id}`).pipe(
             catchError(error => {
                 this.handleError(error)
                 return of(error.error);
@@ -75,7 +75,7 @@ export class OrderService {
         );
     }
 
-   
+
 
     private handleError(error: any) {
         this.$errorService.setError(error.error);
@@ -94,7 +94,7 @@ export class OrderService {
 
 
 
-    
+
 
     private showError(err: any) {
         if (err) {

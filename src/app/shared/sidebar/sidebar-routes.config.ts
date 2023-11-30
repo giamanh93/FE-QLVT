@@ -6,18 +6,18 @@ export const menus = [
     class: 'navigation-header',
     // routerLink: 'early-warning-system',
     items: [
-      {label: 'Quản lý khách hàng', routerLink: '/customer/list', class: 'nav-item',},
+      {label: 'Quản lý khách hàng', routerLink: '/customer/list', class: 'nav-item'},
 
     ]
   },
   {
     label: 'Nhà cung cấp',
-    code: 'order',
+    code: 'supplier',
     icon: 'pi pi-user',
     class: 'navigation-header',
     // routerLink: 'early-warning-system',
     items: [
-      {label: 'Danh sách Nhà cung cấp', routerLink: '/supplier/list', class: 'nav-item',},
+      {label: 'Danh sách Nhà cung cấp', routerLink: '/supplier/list', class: 'nav-item'},
 
     ]
   },
@@ -28,18 +28,18 @@ export const menus = [
     class: 'navigation-header',
     // routerLink: 'early-warning-system',
     items: [
-      {label: 'Quản lý vật tư', routerLink: '/material/list', class: 'nav-item',},
+      {label: 'Quản lý vật tư', routerLink: '/material/list', class: 'nav-item'},
 
     ]
   },
   {
     label: 'Đơn Nhập/Xuất',
-    code: 'order-out',
+    code: 'order',
     icon: 'pi pi-user',
     class: 'navigation-header',
     // routerLink: 'early-warning-system',
     items: [
-      {label: 'Danh sách đơn hàng', routerLink: '/order/list', class: 'nav-item',},
+      {label: 'Danh sách đơn hàng', routerLink: '/order/list', class: 'nav-item'},
 
     ]
   },

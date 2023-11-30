@@ -1,5 +1,15 @@
 
-import { Component, OnInit, inject, ChangeDetectorRef, AfterViewInit, SimpleChanges, OnChanges, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  inject,
+  ChangeDetectorRef,
+  AfterViewInit,
+  SimpleChanges,
+  OnChanges,
+  HostListener,
+  AfterViewChecked, OnDestroy
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { ColDef, GetRowIdFunc, GetRowIdParams } from 'ag-grid-community';
@@ -18,7 +28,7 @@ import { OrderService } from 'src/app/services/order/order.services';
   styleUrls: ['./orders.component.scss']
 })
 
-export class OrdersComponent implements OnInit, AfterViewInit {
+export class OrdersComponent implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked {
   itemsBreadcrumb: HrmBreadcrumb[] = [];
   indexTab: number = 0;
   screenWidth: number = 0;
@@ -163,8 +173,8 @@ export class OrdersComponent implements OnInit, AfterViewInit {
     this.screenWidth = window.innerWidth;
     this.itemsBreadcrumb = [
       { label: 'Trang chủ', routerLink: '/home' },
-      { label: 'vật tư' },
-      { label: 'Danh sách vật tư' },
+      { label: 'Đơn nhập/xuất' },
+      { label: 'Danh sách nhập/ xuất' },
     ];
     this.getLists();
 
@@ -231,7 +241,7 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   }
 
   getContextMenuItems(params: any) {
-    let result = [
+    const result = [
       'copy',
       'paste',
       'separator',
