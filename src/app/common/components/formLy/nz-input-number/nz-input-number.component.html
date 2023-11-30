@@ -1,0 +1,10 @@
+<div class="field grid">
+  <label for="firstname3" class="col-fixed font-semibold" style="width:150px">{{to.label}} <span *ngIf="to.required" >*</span></label>
+  <div class="col">
+    <p-inputNumber inputId="minmaxfraction" mode="decimal" [min]="0" [minFractionDigits]="0" [maxFractionDigits]="3" [showButtons]="false"
+                   [formControl]="formControl" (onBlur)="to.change && to.change(field, $event)" [formlyAttributes]="field"
+                   [ngClass]="{'ng-pristine ng-invalid ng-star-inserted ng-dirty ng-touched': (formControl.touched && formControl.getError('required')) }"
+                   class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></p-inputNumber>
+
+  </div>
+</div>
