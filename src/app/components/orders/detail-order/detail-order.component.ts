@@ -214,7 +214,7 @@ export class DetailOrderComponent implements OnInit, OnDestroy {
                 },
                 {
                   key: 'price',
-                  type: 'nzInput',
+                  type: 'nzInputNumber',
                   props: {
                     label: 'Đơn giá',
                     placeholder: 'Đơn giá',

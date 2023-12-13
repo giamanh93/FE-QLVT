@@ -74,10 +74,10 @@ export class DetailMaterialComponent implements OnInit {
             required: true,
           },
         },
-       
+
         {
           key: 'price_Sell',
-          type: 'nzInput',
+          type: 'nzInputNumber',
           props: {
             label: 'Đơn giá bán',
             placeholder: 'Đơn giá bán',
@@ -87,7 +87,7 @@ export class DetailMaterialComponent implements OnInit {
         },
         {
           key: 'price_Buy',
-          type: 'nzInput',
+          type: 'nzInputNumber',
           props: {
             label: 'Đơn giá mua',
             placeholder: 'Đơn giá mua',
@@ -95,7 +95,7 @@ export class DetailMaterialComponent implements OnInit {
             type: 'number'
           },
         },
-       
+
         {
           key: 'active',
           type: 'nzCheckbox',
@@ -148,7 +148,7 @@ export class DetailMaterialComponent implements OnInit {
           {
             key: 'name',
             type: 'nzInput',
-  
+
             props: {
               label: `Tên vật tư`,
               placeholder: 'Tên vật tư',
@@ -164,7 +164,7 @@ export class DetailMaterialComponent implements OnInit {
               required: true,
             },
           },
-         
+
           {
             key: 'price_Sell',
             type: 'nzInput',
@@ -185,7 +185,7 @@ export class DetailMaterialComponent implements OnInit {
               type: 'number'
             },
           },
-         
+
           {
             key: 'active',
             type: 'nzCheckbox',
@@ -203,9 +203,9 @@ export class DetailMaterialComponent implements OnInit {
             },
           },
         ]
-  
+
       },
-  
+
     ]
   }
   ngOnInit() {

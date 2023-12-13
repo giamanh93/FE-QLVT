@@ -1,5 +1,6 @@
 
-import { Component, OnInit, inject, ChangeDetectorRef, AfterViewInit, SimpleChanges, OnChanges, HostListener } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef
+  , AfterViewInit, HostListener, OnDestroy, AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { ColDef, GetRowIdFunc, GetRowIdParams } from 'ag-grid-community';
